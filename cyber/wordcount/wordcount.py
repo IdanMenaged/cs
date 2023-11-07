@@ -83,16 +83,32 @@ def get_word_counts(filename):
 
 
 def sort_word_counts(word_counts):
+    """
+    :param word_counts: a dict with word-count pairs
+    :return: a sorted list with the pairs as tuples
+    """
     return sorted(word_counts.items(), key=lambda item: item[1], reverse=True)
 
 
 def print_words(filename):
+    """
+    print all words and the number of times they appear in the following format:
+    <count> <word>
+    :param filename: name of the file to be read
+    :return: None
+    """
     word_counts = sort_word_counts(get_word_counts(filename))
     for word, count in word_counts:
         print(f'{count} {word}')
 
 
 def print_top(filename):
+    """
+    print the 20 most common words and the number of times they appear in the following format:
+    <count> <word>
+    :param filename: name of the file to be read
+    :return: None
+    """
     word_counts = sort_word_counts(get_word_counts(filename))[:TOP_CUTOFF]
     for word, count in word_counts:
         print(f'{count} {word}')
