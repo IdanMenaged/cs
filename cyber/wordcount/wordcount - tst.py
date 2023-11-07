@@ -16,7 +16,7 @@ PATH_INDEX = 1
 PATH_WITH_FOLDER_MIN_LEN = 1
 
 # wordcount constants
-FILE_NAME = "alice-chapter-1.txt"
+FILE_NAME = "c:\\cyber\\alice-chapter-1.txt"
 
 
 print("testing: ", [m for m in mods])
