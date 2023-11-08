@@ -53,7 +53,7 @@ TOP_CUTOFF = 20  # in the print_top func, print this many entries
 # Then print_words() and print_top() can just call the utility function.
 
 
-def format_text(text):
+def get_words(text):
     """
     formats the given text to be:
     a. lowercase
@@ -61,7 +61,17 @@ def format_text(text):
     :param text: a string of text
     :return: formatted text
     """
-    return text.lower().translate(str.maketrans('', '', string.punctuation.replace("'", '')))
+    words_with_apostrophe = text.lower().translate(str.maketrans('', '', string.punctuation.replace("'", ''))).split()
+    out = []
+    for word in words_with_apostrophe:
+        if word[0] == "'":
+            word = word[1:]
+        if word[-1] == "'":
+            word = word[:-1]
+        out.append(word)
+
+    return out
+    # return words_with_apostrophe
 
 
 def get_word_counts(filename):
@@ -73,7 +83,7 @@ def get_word_counts(filename):
     word_counts = {}
     with open(filename, 'r') as file:
         contents = file.read()
-    words = format_text(contents).split()
+    words = get_words(contents)
     for word in words:
         if word in word_counts.keys():
             word_counts[word] += 1
