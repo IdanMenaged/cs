@@ -3,10 +3,11 @@ Idan Menaged
 """
 
 CHUNK = 1024
+FILE_EXTENSION_INDEX = -4
 
 
 def main():
-	copy_paste_chunks(r'Untitled Document 1.txt', 'destination_fold')
+	read_3_lines(r'c:\cyber\txt_big.txt')
 
 
 def read_from_file(path):
@@ -16,9 +17,12 @@ def read_from_file(path):
 	:return:  None
 	"""
 	try:
-		with open(path, 'rb') as file:
-			for line in file:
-				print(line, end='')
+		if path[FILE_EXTENSION_INDEX:] == '.txt':
+			with open(path, 'r') as file:
+				print(file.read())
+		else:
+			with open(path, 'rb') as file:
+				print(file.read())
 	except IOError:
 		pass
 				
@@ -30,8 +34,15 @@ def write_to_file(path, content):
 	:param content:  text to be inserted in the file
 	:return: None
 	"""
-	with open(path, 'wb') as file:
-		file.write(content)
+	try:
+		if isinstance(content, str):
+			with open(path, 'w') as file:
+				file.write(content)
+		else:
+			with open(path, 'wb') as file:
+				file.write(content)
+	except IOError:
+		pass
 
 
 def read_3_lines(path):
@@ -41,7 +52,7 @@ def read_3_lines(path):
 	:return: None
 	"""
 	try:
-		with open(path, 'rb') as file:
+		with open(path, 'r') as file:
 			for i, line in enumerate(file):
 				if i >= 3:
 					break
