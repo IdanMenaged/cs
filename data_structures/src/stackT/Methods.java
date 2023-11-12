@@ -107,11 +107,9 @@ public class Methods {
         while (!temp.isEmpty()) {
             n = temp.pop();
 
-            if (n == highestNum) {
-                continue;
+            if (n != highestNum) {
+                stack.push(n);
             }
-
-            stack.push(n);
         }
 
         for (i = 0; i < occurrences; i++) {
