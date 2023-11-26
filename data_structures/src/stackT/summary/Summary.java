@@ -1,37 +1,41 @@
-/**
- * Idan Menaged
- */
-
 package stackT.summary;
 
 import stackT.Stack;
 
 public class Summary {
     /**
-     * switches the first half of the stack with the second half
-     * @param s a stack of characters
+     * swap the first half of a stack with the second
+     * @param s a stack
      */
     public static void ChangeHalf(Stack<Character> s) {
-        Stack<Character> top = new Stack<>(), bottom = new Stack<>(), temp = new Stack<>();
-        int len = 0, i;
+        int length = 0, i;
+        Stack<Character> top = new Stack<>(), bottom = new Stack<>();
 
-        // find len
+        // edge case
+        if (s.isEmpty()) {
+            return;
+        }
+
+        // determine size
         while (!s.isEmpty()) {
             top.push(s.pop());
-            len++;
+            length++;
         }
 
-        // split into top and bottom
-        for (i = 0; i < len / 2; i++) {
-            temp.push(top.pop());
+        // refill
+        while (!top.isEmpty()) {
+            s.push(top.pop());
         }
 
-        // reverse bottom
-        while (!temp.isEmpty()) {
-            bottom.push(temp.pop());
+        // separate halves
+        for (i = 0; i < length / 2; i++) {
+            top.push(s.pop());
+        }
+        while (!s.isEmpty()) {
+            bottom.push(s.pop());
         }
 
-        // refill og
+        // refill
         while (!top.isEmpty()) {
             s.push(top.pop());
         }
@@ -41,55 +45,183 @@ public class Summary {
     }
 
     /**
-     * in the stack, up to a certain number it is sorted and afterwards it is sorted in reverse
-     * finds the number where the switch occurs
-     * @param s a stack
-     * @return the number where the switch happens (-1 for an empty stack)
+     * for a stack that's sorted up to a number n and then reverse-sorted, find n
+     * @param s a stack fulfilling the requirements above
+     * @return the number n as described above
      */
     public static int stackPick(Stack<Integer> s) {
-        Stack<Integer> temp = new Stack<>();
-        int prev, curr, switchPoint;
+        Stack<Integer> backup = new Stack<>();
+        int curr, prev, n;
 
         // edge case
         if (s.isEmpty()) {
             return -1;
         }
 
-        // find curr
+        // find n
         prev = s.top();
-        switchPoint = prev;
-        temp.push(s.pop());
-
+        n = s.top();
         while (!s.isEmpty()) {
-            curr = s.top();
-            temp.push(s.pop());
+            curr = s.pop();
+            backup.push(curr);
 
             if (curr < prev) {
-                switchPoint = curr;
+                n = prev;
                 break;
             }
+
+            prev = curr;
         }
 
-        // fix s
-        while (!temp.isEmpty()) {
-            s.push(temp.pop());
+        // restore s
+        while (!backup.isEmpty()) {
+            s.push(backup.pop());
         }
 
-        return switchPoint;
+        // return
+        return n;
     }
 
     /**
-     * puts a number in the right spot of a sorted stack
+     * insert a number in a sorted stack
      * @param s a sorted stack
-     * @param num num to be inserted
-     * @return the updated stack
+     * @param num a number to be inserted
+     * @return the stack
      */
     public static Stack<Double> putInPlace(Stack<Double> s, double num) {
-        Stack<Double> temp = new Stack<>();
-        int curr;
+        Stack<Double> backup = new Stack<>();
+        boolean inserted = false;
 
+        // go over stack
         while (!s.isEmpty()) {
-            curr = s.pop();
+            if (s.top() < num && !inserted) {
+                backup.push(num);
+                inserted = true;
+            }
+
+            backup.push(s.pop());
         }
+
+        // refill s
+        while (!backup.isEmpty()) {
+            s.push(backup.pop());
+        }
+
+        // if was never inserted, put at the top
+        if (!inserted) {
+            s.push(num);
+        }
+
+        // return
+        return s;
+    }
+
+    /**
+     * merge 2 sorted stacks into a single reverse sorted one
+     * @param s1 a sorted stack
+     * @param s2 a sorted stack
+     * @return the new stack
+     */
+    public static Stack<Integer> mergeStacks(Stack<Integer> s1, Stack<Integer> s2) {
+        Stack<Integer> backup1 = new Stack<>(), backup2 = new Stack<>(), out = new Stack<>();
+
+        // go over both
+        while (!s1.isEmpty() && !s2.isEmpty()) {
+            if (s1.top() > s2.top()) {
+                backup1.push(s1.top());
+                out.push(s1.pop());
+            } else if (s1.top() < s2.top()) {
+                backup2.push(s2.top());
+                out.push(s2.pop());
+            } else {
+                backup1.push(s1.top());
+                backup2.push(s2.top());
+                out.push(s1.pop());
+                out.push(s2.pop());
+            }
+        }
+
+        // go over remainders
+        while (!s1.isEmpty()) {
+            out.push(s1.top());
+            backup1.push(s1.pop());
+        }
+
+        while (!s2.isEmpty()) {
+            out.push(s2.top());
+            backup2.push(s2.pop());
+        }
+
+        // return
+        return out;
+    }
+
+    /**
+     * determines whether the given string is a mirror
+     * @param st a string
+     * @return true if the string is a mirror, otherwise false
+     */
+    public static boolean isMirror(String st) {
+        Stack<Character> stack = new Stack<>();
+        int i;
+
+        // check middle
+        if (st.charAt(st.length() / 2) != 'c') {
+            return false;
+        }
+
+        // go over first half
+        for (i = 0; i < st.length() / 2; i++) {
+            stack.push(st.charAt(i));
+        }
+
+        // compare with second half
+        for (i = st.length() / 2 + 1; i < st.length(); i++) {
+            if (st.charAt(i) != stack.pop()) {
+                return false;
+            }
+        }
+
+        return true;
+    }
+
+    /**
+     * creates a stack that consists of all the characters in the original but a sequence of the same char only appears
+     * as one char
+     * @param s a stack
+     * @return the new stack according to the requirements above
+     */
+    public static Stack<Character> zip(Stack<Character> s) {
+        Stack<Character> backup = new Stack<>(), out = new Stack<>(), temp = new Stack<>();
+        char sequenceChar;
+
+        // edge case
+        if (s.isEmpty()) {
+            return out;
+        }
+
+        // go over s
+        backup.push(s.top());
+        temp.push(s.top());
+        sequenceChar = s.pop();
+        while (!s.isEmpty()) {
+            if (s.top() != sequenceChar) {
+                sequenceChar = s.top();
+                temp.push(s.top());
+            }
+            backup.push(s.pop());
+        }
+
+        // reverse out
+        while (!temp.isEmpty()) {
+            out.push(temp.pop());
+        }
+
+        // refill s
+        while (!backup.isEmpty()) {
+            s.push(backup.pop());
+        }
+
+        return out;
     }
 }
