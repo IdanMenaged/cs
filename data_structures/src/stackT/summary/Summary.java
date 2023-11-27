@@ -169,6 +169,14 @@ public class Summary {
             backup2.push(s2.pop());
         }
 
+        // repair originals
+        while (!backup1.isEmpty()) {
+            s1.push(backup1.pop());
+        }
+        while (!backup2.isEmpty()) {
+            s2.push(backup2.pop());
+        }
+
         // return
         return out;
     }
@@ -182,8 +190,13 @@ public class Summary {
         Stack<Character> stack = new Stack<>();
         int i;
 
-        // check middle
-        if (st.charAt(st.length() / 2) != 'c') {
+        // check for empty st
+        if (st.isEmpty()) {
+            return false;
+        }
+
+        // check middle and length
+        if (st.charAt(st.length() / 2) != 'c' || st.length() % 2 == 0) {
             return false;
         }
 
