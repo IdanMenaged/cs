@@ -52,8 +52,9 @@ public class Summary {
     public static int stackPick(Stack<Integer> s) {
         Stack<Integer> backup = new Stack<>();
         int curr, prev, n;
+        boolean found = false;
 
-        // edge case
+        // edge case - s is empty
         if (s.isEmpty()) {
             return -1;
         }
@@ -61,16 +62,21 @@ public class Summary {
         // find n
         prev = s.top();
         n = s.top();
-        while (!s.isEmpty()) {
+        while (!s.isEmpty() && !found) {
             curr = s.pop();
             backup.push(curr);
 
             if (curr < prev) {
                 n = prev;
-                break;
+                found = true;
             }
 
             prev = curr;
+        }
+
+        // edge case - all sorted normally
+        if (!found) {
+            n = backup.top();
         }
 
         // restore s
@@ -92,6 +98,12 @@ public class Summary {
         Stack<Double> backup = new Stack<>();
         boolean inserted = false;
 
+        // edge case - s is empty
+        if (s.isEmpty()) {
+            s.push(num);
+            return s;
+        }
+
         // go over stack
         while (!s.isEmpty()) {
             if (s.top() < num && !inserted) {
@@ -102,13 +114,18 @@ public class Summary {
             backup.push(s.pop());
         }
 
+        // if was never inserted and is the smallest, put at the bottom
+        if (!inserted && num <= backup.top()) {
+                s.push(num);
+        }
+
         // refill s
         while (!backup.isEmpty()) {
             s.push(backup.pop());
         }
 
-        // if was never inserted, put at the top
-        if (!inserted) {
+        // if was never inserted and is the biggest, put at the top
+        if (!inserted && num >= s.top()) {
             s.push(num);
         }
 
