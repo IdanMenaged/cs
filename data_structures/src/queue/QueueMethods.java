@@ -5,10 +5,10 @@ public class QueueMethods {
         Queue<Integer> q = new Queue<>();
         q.insert(1);
         q.insert(2);
-        q.insert(3);
+        q.insert(4);
         q.insert(1);
 
-        System.out.println(copyQ(q));
+        oddEven(q);
         System.out.println(q);
     }
 
@@ -116,7 +116,7 @@ public class QueueMethods {
 
         // add odd
         while (!copy.isEmpty()) {
-
+            q.insert(copy.remove());
         }
     }
 
