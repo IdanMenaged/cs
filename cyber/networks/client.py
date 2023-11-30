@@ -10,11 +10,20 @@ MSG_LEN = 1024
 
 
 def main():
-    server_socket = init_client()
-    res = talk_to_server(server_socket, 'Homer Simpson')
-    print('print bytes: ', res)
-    print("print string: ", res.decode())
-    server_socket.close()
+    try:
+        client_socket = init_client()
+        msg = input('please enter a request ')
+        while msg.lower() != 'exit':
+            res = talk_to_server(client_socket, msg)
+            print('print bytes: ', res)
+            print("print string: ", res.decode())
+
+            msg = input('enter command: ')
+        client_socket.close()
+    except socket.error as err:
+        print('socket error: ', err)
+    except Exception as err:
+        print('general error: ', err)
 
 
 def init_client(ip=IP, port=PORT):

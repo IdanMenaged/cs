@@ -11,7 +11,14 @@ SIMULTANEOUS_CLIENTS = 1
 
 
 def main():
-    pass
+    try:
+        server_socket = init_server()
+        handle_clients(server_socket)
+        server_socket.close()
+    except socket.error as err:
+        print('socket error: ', err)
+    except Exception as err:
+        print("general error: ", err)
 
 
 def init_server(ip=IP, port=PORT):
@@ -25,6 +32,30 @@ def init_server(ip=IP, port=PORT):
     my_socket.listen(SIMULTANEOUS_CLIENTS)
 
     return my_socket
+
+
+def handle_clients(server_socket):
+    """
+    handles multiple clients
+    :param server_socket: socket for the server
+    """
+    while True:
+        client_socket, address = server_socket.accept()
+        handle_client(client_socket)
+
+
+def handle_client(client_socket):
+    """
+    accept req from client and send/receive data
+    :param client_socket: socket for the client
+    :return: True if server is to be terminated (aka client sent 'exit')
+    """
+    data = client_socket.recv(MSG_LEN)
+    while data.decode() != '' and data.decode().lower() != 'exit':
+        client_socket.send(data)
+        data = client_socket.recv(MSG_LEN)
+
+    client_socket.close()
 
 
 if __name__ == '__main__':
