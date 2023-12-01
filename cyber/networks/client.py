@@ -45,6 +45,10 @@ def talk_to_server(server_socket, msg):
 
 
 def handle_user_input(my_socket):
+    """
+    takes input from user, sends it to the server, deals with the response, repeats
+    :param my_socket: socket for communication with server
+    """
     req = input("please enter a request ")
     while req.lower() != 'exit':
         res = talk_to_server(my_socket, req)
