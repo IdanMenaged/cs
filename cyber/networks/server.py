@@ -12,7 +12,7 @@ SIMULTANEOUS_CLIENTS = 1
 
 def main():
     try:
-        server_socket = init_server()
+        server_socket = initiate_server_socket()
         handle_clients(server_socket)
         server_socket.close()
     except socket.error as err:
@@ -21,7 +21,7 @@ def main():
         print("general error: ", err)
 
 
-def init_server(ip=IP, port=PORT):
+def initiate_server_socket(ip=IP, port=PORT):
     f"""
     creates a socket for the server and listen for incoming requests
     :param ip: ip, defaults to {IP}
@@ -41,10 +41,10 @@ def handle_clients(server_socket):
     """
     while True:
         client_socket, address = server_socket.accept()
-        handle_client(client_socket)
+        handle_single_client(client_socket)
 
 
-def handle_client(client_socket):
+def handle_single_client(client_socket):
     """
     accept req from client and send/receive data
     :param client_socket: socket for the client

@@ -11,14 +11,8 @@ MSG_LEN = 1024
 
 def main():
     try:
-        client_socket = init_client()
-        msg = input('please enter a request ')
-        while msg.lower() != 'exit':
-            res = talk_to_server(client_socket, msg)
-            print('print bytes: ', res)
-            print("print string: ", res.decode())
-
-            msg = input('enter command: ')
+        client_socket = initiate_client_socket()
+        handle_user_input(client_socket)
         client_socket.close()
     except socket.error as err:
         print('socket error: ', err)
@@ -26,7 +20,7 @@ def main():
         print('general error: ', err)
 
 
-def init_client(ip=IP, port=PORT):
+def initiate_client_socket(ip=IP, port=PORT):
     f"""
     create a socket and connect to server
     :param ip: ip, defaults to {IP}
@@ -48,6 +42,17 @@ def talk_to_server(server_socket, msg):
     """
     server_socket.send(msg.encode())
     return server_socket.recv(MSG_LEN)
+
+
+def handle_user_input(my_socket):
+    req = input("please enter a request ")
+    while req.lower() != 'exit':
+        res = talk_to_server(my_socket, req)
+
+        print('print bytes: ', res)
+        print("print string: ", res.decode())
+
+        req = input("please enter a request ")
 
 
 if __name__ == '__main__':
