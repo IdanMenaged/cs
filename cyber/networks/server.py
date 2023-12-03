@@ -12,19 +12,24 @@ MSG_LEN = 1024
 SIMULTANEOUS_CLIENTS = 1
 SERVER_NAME = "idan's amazing server"
 RAND_RANGE = (1, 11)
+ILLEGAL_COMMAND_CODE = 'illegal command'
 
 
 def main():
-    try:
-        server_socket = initiate_server_socket()
-        handle_clients(server_socket)
-        server_socket.close()
-    except socket.error as err:
-        print('socket error: ', err)
-    except Exception as err:
-        print("general error: ", err)
+    # try:
+    #     server_socket = initiate_server_socket()
+    #     handle_clients(server_socket)
+    #     server_socket.close()
+    # except socket.error as err:
+    #     print('socket error: ', err)
+    # except Exception as err:
+    #     print("general error: ", err)
+    server_socket = initiate_server_socket()
+    handle_clients(server_socket)
+    server_socket.close()
 
 
+# server operation functions
 def initiate_server_socket(ip=IP, port=PORT):
     f"""
     creates a socket for the server and listen for incoming requests
@@ -54,54 +59,94 @@ def handle_single_client(client_socket):
     :param client_socket: socket for the client
     :return: True if server is to be terminated (aka client sent 'exit')
     """
-    data = client_socket.recv(MSG_LEN)
-    while data.decode() != '' and data.decode().lower() != 'exit':
-        client_socket.send(data)
-        data = client_socket.recv(MSG_LEN)
+    done = False
+    while not done:
+        request = receive_client_request(client_socket)
+        response = handle_client_request(request)
+        send_response_to_client(response, client_socket)
 
-    client_socket.close()
+        done = request.lower() == 'exit' or request.lower() == 'quit'
 
 
-def send_time(client_socket):
+def receive_client_request(client_socket):
     """
-    sends client the current date and time
-    :param client_socket: client socket
+    receives a request from the client
+    :param client_socket: socket for communication with client
+    :return: a string representing client request
     """
-    client_socket.send(str(datetime.datetime.now()).encode())
+    return client_socket.recv(MSG_LEN).decode()
 
 
-def send_name(client_socket):
+def handle_client_request(request):
     """
-    sends the name of the server
-    :param client_socket: client socket
+    creates a response appropriate to the request
+    :param request: a string representing client's request
+    :return: a string representing server response
     """
-    client_socket.send(SERVER_NAME)
+    response = ''
+    match request.lower():
+        case 'time':
+            response = TIME()
+        case 'name':
+            response = NAME()
+        case 'rand':
+            response = RAND()
+        case 'quit':
+            response = QUIT()
+        case 'exit':
+            response = EXIT()
+        case _:
+            response = ILLEGAL_COMMAND_CODE
+    return response
 
 
-def send_rand(client_socket):
+def send_response_to_client(response, client_socket):
     """
-    sends a random number between 1 and 10
-    :param client_socket: client socket
+    sends a response to the client
+    :param response: string representing response to send
+    :param client_socket: socket for communication with client
     """
-    client_socket.send(random.randrange(RAND_RANGE[0], RAND_RANGE[1]))
+    client_socket.send(response.encode())
 
 
-def quit_client_connection(client_socket):
+# command functions
+def TIME():
     """
-    ends connection with client and waits for another connection
-    :param client_socket: client socket
+    gets the current time
+    :return: string representing the date and time
     """
-    client_socket.close()
+    return str(datetime.datetime.now())
 
 
-def exit_server(server_socket, client_socket):
+def NAME():
     """
-    ends connection with client and also terminate the server
-    :param server_socket: the socket handling the whole server
-    :param client_socket: the socket handling a specific connection
+    get server's name
     """
-    client_socket.close()
-    server_socket.close()
+    return SERVER_NAME
+
+
+def RAND():
+    """
+    gets number between 1 and 10
+    :return: random number
+    """
+    return str(random.randrange(RAND_RANGE[0], RAND_RANGE[1]))
+
+
+def QUIT():
+    """
+    create a string that will cause connection to quit if sent to send_response_to_client
+    :return: 'quit'
+    """
+    return 'quit'
+
+
+def EXIT():
+    """
+    create a string that will cause server to terminate if sent to send_response_to_client
+    :return: 'exit'
+    """
+    return 'exit'
 
 
 if __name__ == '__main__':

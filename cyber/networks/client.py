@@ -7,6 +7,7 @@ import socket
 IP = '127.0.0.1'
 PORT = 1234
 MSG_LEN = 1024
+VALID_REQUESTS = {'time', 'name', 'rand', 'quit', 'exit'}
 
 
 def main():
@@ -44,19 +45,48 @@ def talk_to_server(server_socket, msg):
     return server_socket.recv(MSG_LEN)
 
 
+def valid_request(request):
+    """
+    checks if a request is a valid one
+    :return: true if valid, otherwise false
+    """
+    return request.lower() in VALID_REQUESTS
+
+
+def send_request_to_server(my_socket, request):
+    """
+    sends a request to the server
+    :param my_socket: socket for communication with server
+    :param request: string representing the request
+    """
+    my_socket.send(request.encode())
+
+
+def handle_server_response(my_socket):
+    """
+    receives server response and prints it as bytes and as string
+    :param my_socket: socket for communication with client
+    """
+    res = my_socket.recv(MSG_LEN)
+
+    print('print bytes: ', res)
+    print('print string: ', res.decode())
+
+
 def handle_user_input(my_socket):
     """
     takes input from user, sends it to the server, deals with the response, repeats
     :param my_socket: socket for communication with server
     """
-    req = input("please enter a request ")
-    while req.lower() != 'exit':
-        res = talk_to_server(my_socket, req)
+    req = input("please enter a request ").lower()
+    while req != 'exit' and req != 'quit':
+        if valid_request(req):
+            send_request_to_server(my_socket, req)
+            handle_server_response(my_socket)
+        else:
+            print('illegal request')
 
-        print('print bytes: ', res)
-        print("print string: ", res.decode())
-
-        req = input("please enter a request ")
+        req = input("please enter a request ").lower()
 
 
 if __name__ == '__main__':
