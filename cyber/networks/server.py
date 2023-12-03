@@ -16,17 +16,8 @@ ILLEGAL_COMMAND_CODE = 'illegal command'
 
 
 def main():
-    # try:
-    #     server_socket = initiate_server_socket()
-    #     handle_clients(server_socket)
-    #     server_socket.close()
-    # except socket.error as err:
-    #     print('socket error: ', err)
-    # except Exception as err:
-    #     print("general error: ", err)
     server_socket = initiate_server_socket()
     handle_clients(server_socket)
-    server_socket.close()
 
 
 # server operation functions
@@ -48,9 +39,11 @@ def handle_clients(server_socket):
     handles multiple clients
     :param server_socket: socket for the server
     """
-    while True:
+    done = False
+    while not done:
         client_socket, address = server_socket.accept()
-        handle_single_client(client_socket)
+        done = handle_single_client(client_socket)
+    server_socket.close()
 
 
 def handle_single_client(client_socket):
@@ -59,13 +52,18 @@ def handle_single_client(client_socket):
     :param client_socket: socket for the client
     :return: True if server is to be terminated (aka client sent 'exit')
     """
-    done = False
-    while not done:
-        request = receive_client_request(client_socket)
-        response = handle_client_request(request)
-        send_response_to_client(response, client_socket)
+    req = 'a'
+    try:
+        while req != '' and req != 'exit':
+            request = receive_client_request(client_socket).lower()
+            response = handle_client_request(request).lower()
+            send_response_to_client(response, client_socket)
+    except socket.error as err:
+        print('socket error: ', err)
+    except Exception as err:
+        print('general error: ', err)
 
-        done = request.lower() == 'exit' or request.lower() == 'quit'
+    return req == 'exit'
 
 
 def receive_client_request(client_socket):

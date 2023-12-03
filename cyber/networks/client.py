@@ -14,7 +14,6 @@ def main():
     try:
         client_socket = initiate_client_socket()
         handle_user_input(client_socket)
-        client_socket.close()
     except socket.error as err:
         print('socket error: ', err)
     except Exception as err:
@@ -32,17 +31,6 @@ def initiate_client_socket(ip=IP, port=PORT):
     my_socket.connect((ip, port))
 
     return my_socket
-
-
-def talk_to_server(server_socket, msg):
-    """
-    sends a message to the server and receives a response
-    :param server_socket: socket to talk to
-    :param msg: message to send
-    :return: server response
-    """
-    server_socket.send(msg.encode())
-    return server_socket.recv(MSG_LEN)
 
 
 def valid_request(request):
@@ -87,6 +75,8 @@ def handle_user_input(my_socket):
             print('illegal request')
 
         req = input("please enter a request ").lower()
+
+    my_socket.close()
 
 
 if __name__ == '__main__':
