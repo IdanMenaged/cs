@@ -1,5 +1,4 @@
 import socket
-import random
 import protocol
 import methods
 IP = "0.0.0.0"
@@ -76,7 +75,7 @@ def send_response_to_client(response,client_socket):
     :return: 
     """
     response_bytes = response.encode()
-    protocol.send(client_socket,response_bytes)
+    protocol.send(client_socket, response_bytes)
 
 
 def handle_single_client(client_socket):
