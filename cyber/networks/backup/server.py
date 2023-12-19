@@ -52,12 +52,14 @@ def handle_single_client(client_socket):
     :param client_socket: socket for the client
     :return: True if server is to be terminated (aka client sent 'exit')
     """
-    req = 'a'
+    req = ' '
     try:
-        while req != '' and req != 'exit':
-            request = receive_client_request(client_socket).lower()
-            response = handle_client_request(request).lower()
+        while req != '' and req != 'exit' and req != 'quit':
+            req = receive_client_request(client_socket).lower()
+            response = handle_client_request(req).lower()
             send_response_to_client(response, client_socket)
+
+        client_socket.close()
     except socket.error as err:
         print('socket error: ', err)
     except Exception as err:
