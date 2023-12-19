@@ -5,6 +5,9 @@ name = "pypi"
 
 [packages]
 pytest = "*"
+numpy = "*"
+pyautogui = "*"
+opencv-python = "*"
 
 [dev-packages]
 
