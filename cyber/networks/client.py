@@ -1,82 +1,90 @@
-"""
-Idan Menaged
-"""
-
 import socket
-
-IP = '127.0.0.1'
-PORT = 1234
+import protocol
+import methods
+IP = "127.0.0.1"
+PORT = 3333
 MSG_LEN = 1024
-VALID_REQUESTS = {'time', 'name', 'rand', 'quit', 'exit'}
 
 
-def main():
-    try:
-        client_socket = initiate_client_socket()
-        handle_user_input(client_socket)
-    except socket.error as err:
-        print('socket error: ', err)
-    except Exception as err:
-        print('general error: ', err)
-
-
-def initiate_client_socket(ip=IP, port=PORT):
-    f"""
-    create a socket and connect to server
-    :param ip: ip, defaults to {IP}
-    :param port: port, defaults to {PORT}
-    :return: socket
+def initiate_client_socket(ip, port):
+    """
+    Initializes and returns a client socket connected to the specified IP address and port
     """
     my_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-    my_socket.connect((ip, port))
-
+    my_socket.connect((IP, PORT))
     return my_socket
-
-
-def valid_request(request):
-    """
-    checks if a request is a valid one
-    :return: true if valid, otherwise false
-    """
-    return request.lower() in VALID_REQUESTS
-
-
-def send_request_to_server(my_socket, request):
-    """
-    sends a request to the server
-    :param my_socket: socket for communication with server
-    :param request: string representing the request
-    """
-    my_socket.send(request.encode())
-
-
-def handle_server_response(my_socket):
-    """
-    receives server response and prints it as bytes and as string
-    :param my_socket: socket for communication with client
-    """
-    res = my_socket.recv(MSG_LEN)
-
-    print('print bytes: ', res)
-    print('print string: ', res.decode())
 
 
 def handle_user_input(my_socket):
     """
-    takes input from user, sends it to the server, deals with the response, repeats
-    :param my_socket: socket for communication with server
-    """
-    req = input("please enter a request ").lower()
-    while req != 'exit' and req != 'quit':
-        if valid_request(req):
-            send_request_to_server(my_socket, req)
+accepts user input for a request, checks its validity, sends it to the server
+ and prints the server's response.
+ """
+    try:
+        request = input('please enter a request ')
+        request = request.upper()
+        if valid_request(request):
+            send_request_to_server(my_socket, request)
             handle_server_response(my_socket)
         else:
-            print('illegal request')
+            print("illegal request")
+        my_socket.close()
+    except socket.error as msg:
+        print("socket error: ", msg)
+        my_socket.close()
 
-        req = input("please enter a request ").lower()
 
-    my_socket.close()
+def valid_request(request):
+    """
+
+    Checks if the user's request is valid (TIME, NAME, RAND, EXIT, or QUIT)
+    and returns a boolean indicating validity.
+    """
+    done = False
+    if request == "TIME":
+        done = True
+    elif request == "NAME":
+        done = True
+    elif request == "RAND":
+        done = True
+    elif request.upper() == "EXIT":
+        done = True
+    elif request.upper() == "QUIT":
+        done = True
+    return done
+
+
+def send_request_to_server(my_socket, request):
+    """
+
+    Encodes and sends
+    the user's request to the server using the socket.
+    """
+    protocol.send(my_socket, request.encode())
+
+
+def handle_server_response(my_socket):
+    """
+    receives and decodes the server's response
+     from the specified socket and prints the response string.
+    """
+    response = protocol.recv(my_socket)
+    print("string: ", response.decode())
+
+
+def main():
+    """
+   initiates a client socket, handles user input
+     and prints errors.
+    :return:
+    """
+    my_socket = initiate_client_socket(IP, PORT)
+    try:
+        handle_user_input(my_socket)
+    except socket.error as e:
+        print("Socket error")
+    except Exception as e:
+        print("Error")
 
 
 if __name__ == '__main__':
