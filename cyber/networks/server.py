@@ -30,6 +30,7 @@ def handle_clients(server_socket):
     :param server_socket:
     :return:
     """
+    done = False
     try:
         while not done:
             client_socket, address = server_socket.accept()  # wait for new client
