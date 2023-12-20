@@ -10,25 +10,18 @@ def send(socket, data):
 
 
 def recv(socket):
-    # data_size_str = b""
-    # i = 0
-    # while i < FIRSTLOOPSIZE:
-    #     data_receive = socket.recv()
-    #     data_size_str += data_receive
-    #     i += len(data_receive)
-    #
-    # data_size = int(data_size_str.decode())
-    # data = b""
-    # while data_size > 0:
-    #     data_receive = socket.recv(data_size)
-    #     data += data_receive
-    #     data_size -= len(data_receive)
-    #
-    # return data.decode()
-    size = int(socket.recv(MSG_LEN_BYTE_SIZE).decode())
+    data_size_str = b""
+    i = 0
+    while i < MSG_LEN_BYTE_SIZE:
+        data_receive = socket.recv()
+        data_size_str += data_receive
+        i += len(data_receive)
 
-    tot_data = b''
-    while int(size) > 0:
-        data = socket.recv(size)
-        size -= len(data)
-        tot_data += data
+    data_size = int(data_size_str.decode())
+    data = b""
+    while data_size > 0:
+        data_receive = socket.recv(data_size)
+        data += data_receive
+        data_size -= len(data_receive)
+
+    return data.decode()

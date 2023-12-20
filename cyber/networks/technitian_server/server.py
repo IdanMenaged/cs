@@ -1,5 +1,6 @@
 import socket
 import protocol
+import methods
 
 IP = '0.0.0.0'
 PORT = 4000
@@ -24,10 +25,18 @@ def handle_client(server_socket):
     client_socket, addr = server_socket.accept()
     print('client accepted')
 
-    content = protocol.receive(client_socket)
+    req = protocol.receive(client_socket)
     print('msg received')
-    protocol.send(client_socket, content)
+
+    res = handle_req(req)
+    protocol.send(client_socket, res)
     print('msg sent')
+
+
+def handle_req(req):
+    req = req.lower()
+    cmd, *params = req.split()
+    return cmd
 
 
 if __name__ == '__main__':

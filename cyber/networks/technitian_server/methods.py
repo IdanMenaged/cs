@@ -8,13 +8,13 @@ def main():
 
 def take_screenshot():
     im = ImageGrab.grab(xdisplay=':0')  # :0 means the first monitor
-    im.show()
+    return im
 
 
-def send_file(socket, file_path):
+def send_file(file_path):
     with open(file_path, 'rb') as file:
         content = file.read()
-    protocol.send(socket, content)
+    return content
 
 
 if __name__ == '__main__':
