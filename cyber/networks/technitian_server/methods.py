@@ -1,6 +1,5 @@
-import numpy as np
-import cv2
-import pyautogui
+from PIL import ImageGrab
+import protocol
 
 
 def main():
@@ -8,14 +7,14 @@ def main():
 
 
 def take_screenshot():
-    image = pyautogui.screenshot()
-    image = cv2.cvtColor(np.array(image), cv2.COLOR_RGB2BGR)   # convert from PIL to numpy array
-    cv2.imwrite('screenshot.png', image)
+    im = ImageGrab.grab(xdisplay=':0')  # :0 means the first monitor
+    im.show()
 
 
 def send_file(socket, file_path):
     with open(file_path, 'rb') as file:
         content = file.read()
+    protocol.send(socket, content)
 
 
 if __name__ == '__main__':
