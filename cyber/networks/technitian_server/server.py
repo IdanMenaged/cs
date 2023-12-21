@@ -11,6 +11,7 @@ def main():
     sock = init()
     print('starting server')
     handle_client(sock)
+    sock.close()
 
 
 def init():
@@ -32,11 +33,13 @@ def handle_client(server_socket):
     protocol.send(client_socket, res)
     print('msg sent')
 
+    client_socket.close()
+
 
 def handle_req(req):
     req = req.lower()
     cmd, *params = req.split()
-    return cmd
+    return getattr(methods, cmd)(*params)
 
 
 if __name__ == '__main__':

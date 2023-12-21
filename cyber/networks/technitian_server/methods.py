@@ -1,5 +1,4 @@
 from PIL import ImageGrab
-import protocol
 
 
 def main():
@@ -14,7 +13,7 @@ def take_screenshot():
 def send_file(file_path):
     with open(file_path, 'rb') as file:
         content = file.read()
-    return content
+    return content.decode()
 
 
 if __name__ == '__main__':
