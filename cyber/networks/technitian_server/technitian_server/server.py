@@ -26,28 +26,20 @@ def handle_client(server_socket):
     client_socket, addr = server_socket.accept()
     print('client accepted')
 
-    while True:
-        req = protocol.receive(client_socket)
-        print('msg received')
+    req = protocol.receive(client_socket)
+    print('msg received')
 
-        res = handle_req(req)
-
-        protocol.send(client_socket, res)
-        print('msg sent')
-
-        if res == 'quit':
-            break
+    res = handle_req(req)
+    protocol.send(client_socket, res)
+    print('msg sent')
 
     client_socket.close()
 
 
 def handle_req(req):
     req = req.lower()
-    try:
-        cmd, *params = req.split()
-        return getattr(methods, cmd)(*params)
-    except AttributeError or ValueError:
-        return 'illegal request'
+    cmd, *params = req.split()
+    return getattr(methods, cmd)(*params)
 
 
 if __name__ == '__main__':

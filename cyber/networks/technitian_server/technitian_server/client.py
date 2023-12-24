@@ -8,15 +8,8 @@ SERVER_PORT = 4000
 def main():
     sock = init()
     print('starting client')
-
-    while True:
-        res = request(sock, input('enter cmd: '))
-        print(f'received res {res}')
-
-        if res == 'quit':
-            break
-
-        sock.close()
+    request(sock, 'take_screenshot')
+    sock.close()
 
 
 def init():
@@ -30,7 +23,7 @@ def request(sock, req):
     protocol.send(sock, req)
     print('sending req')
     res = protocol.receive(sock)
-    return res
+    print(f'received res {res}')
 
 
 if __name__ == '__main__':
