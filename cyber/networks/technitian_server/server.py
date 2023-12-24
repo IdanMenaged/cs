@@ -10,7 +10,7 @@ SIM_USERS = 1  # n of simultaneous users
 def main():
     sock = init()
     print('starting server')
-    handle_client(sock)
+    handle_clients(sock)
     sock.close()
 
 
@@ -20,6 +20,14 @@ def init():
     sock.listen(SIM_USERS)
 
     return sock
+
+
+def handle_clients(sock):
+    while True:
+        should_exit = handle_client(sock)
+
+        if should_exit:
+            break
 
 
 def handle_client(server_socket):
@@ -35,10 +43,11 @@ def handle_client(server_socket):
         protocol.send(client_socket, res)
         print('msg sent')
 
-        if res == 'quit':
+        if res == 'quit' or res == 'exit' or res == '':
             break
 
     client_socket.close()
+    return res == 'exit'
 
 
 def handle_req(req):

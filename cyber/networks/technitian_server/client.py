@@ -13,7 +13,7 @@ def main():
         res = request(sock, input('enter cmd: '))
         print(f'received res {res}')
 
-        if res == 'quit':
+        if res == 'quit' or res == 'exit' or res == '':
             break
 
     sock.close()
