@@ -1,5 +1,8 @@
 from PIL import ImageGrab
 import glob
+import os
+import shutil
+import subprocess
 
 SCREENSHOT_PATH = r'c:\technitian_server\screenshot.png'
 
@@ -22,6 +25,21 @@ def send_file(file_path):
 
 def dir(path):
     return str(glob.glob(rf'{path}\*.*'))
+
+
+def delete(path):
+    os.remove(path)
+    return 'file deleted'
+
+
+def copy(origin, destination):
+    shutil.copy(origin, destination)
+    return 'file copied'
+
+
+def execute(program):
+    subprocess.call(program)
+    return 'program executed'
 
 
 def quit():
