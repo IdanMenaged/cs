@@ -8,7 +8,7 @@ SERVER_PORT = 4000
 def main():
     sock = init()
     print('starting client')
-    request(sock, 'take_screenshot')
+    request(sock, 'send_file t.txt')
     sock.close()
 
 

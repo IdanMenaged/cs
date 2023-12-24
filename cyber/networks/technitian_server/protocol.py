@@ -20,7 +20,13 @@ def receive(socket):
     :param socket: comm socket
     :return: string with content
     """
-    content_len = int(socket.recv(MSG_LEN_PADDING).decode())  # might want to put in a loop
+    content_len = 0
+    len_received = 0
+    while len_received < MSG_LEN_PADDING:
+        packet = socket.recv(MSG_LEN_PADDING)
+        len_received += len(packet)
+        content_len += int(packet.decode())
+
     len_received = 0
     content = ""
     while len_received < content_len:
