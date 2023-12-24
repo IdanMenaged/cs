@@ -16,7 +16,7 @@ def main():
         if res == 'quit':
             break
 
-        sock.close()
+    sock.close()
 
 
 def init():
