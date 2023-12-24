@@ -5,6 +5,7 @@ import methods
 IP = '0.0.0.0'
 PORT = 4000
 SIM_USERS = 1  # n of simultaneous users
+EXIT_CODES = {'quit', 'exit', 'illegal request'}
 
 
 def main():
@@ -43,7 +44,7 @@ def handle_client(server_socket):
         protocol.send(client_socket, res)
         print('msg sent')
 
-        if res == 'quit' or res == 'exit' or res == '':
+        if res in EXIT_CODES:
             break
 
     client_socket.close()

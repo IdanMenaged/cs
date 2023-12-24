@@ -1,4 +1,4 @@
 .pytest_cache/
-__pychache__/
+__pycache__/
 .idea/
 Pipfile.lock

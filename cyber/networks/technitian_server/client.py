@@ -3,6 +3,7 @@ import protocol
 
 SERVER_IP = '127.0.0.1'
 SERVER_PORT = 4000
+EXIT_CODES = {'quit', 'exit', 'illegal request'}
 
 
 def main():
@@ -13,7 +14,7 @@ def main():
         res = request(sock, input('enter cmd: '))
         print(f'received res {res}')
 
-        if res == 'quit' or res == 'exit' or res == '':
+        if res in EXIT_CODES:
             break
 
     sock.close()
