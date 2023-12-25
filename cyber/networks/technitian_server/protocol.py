@@ -1,4 +1,10 @@
 MSG_LEN_PADDING = 4  # n of bytes to put in front of the content to show it's len
+MAX_CHUNK_SIZE = 1024
+BIN_DONE = -1
+
+
+def add_prefix(content):
+    return str(len(content)).zfill(MSG_LEN_PADDING).encode() + content
 
 
 def send(socket, content):
@@ -8,9 +14,10 @@ def send(socket, content):
     :return: None
     """
     content = content.encode()  # convert to bytes
-    content_len = len(content)
-    content_len = str(content_len).zfill(MSG_LEN_PADDING).encode()  # zfill and convert to bytes
-    content = content_len + content  # join the len in front of the content
+    # content_len = len(content)
+    # content_len = str(content_len).zfill(MSG_LEN_PADDING).encode()  # zfill and convert to bytes
+    # content = content_len + content  # join the len in front of the content
+    content = add_prefix(content)
 
     socket.send(content)
 
@@ -34,3 +41,17 @@ def receive(socket):
         len_received += len(packet)
         content += packet.decode()
     return content
+
+
+def send_bin(socket, content):
+    len_sent = 0
+    while len_sent < len(content):
+        chunk_size = max(MAX_CHUNK_SIZE, len(content))  # sometimes the content is not perfectly divisible by
+        # MAX_CHUNK_SIZE
+        chunk = content[:chunk_size]
+        socket.send(add_prefix(chunk))
+    socket.send(add_prefix(str(BIN_DONE).encode()))
+
+
+def receive_bin(socket):
+    pass
