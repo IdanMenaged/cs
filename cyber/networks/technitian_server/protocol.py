@@ -2,6 +2,8 @@ MSG_LEN_PADDING = 4  # n of bytes to put in front of the content to show it's le
 MAX_CHUNK_SIZE = 1024
 BIN_DONE = -1
 
+# TODO: test send_bin and receive_bin. if doesn't work, try using files
+
 
 def add_prefix(content):
     return str(len(content)).zfill(MSG_LEN_PADDING).encode() + content
@@ -14,9 +16,6 @@ def send(socket, content):
     :return: None
     """
     content = content.encode()  # convert to bytes
-    # content_len = len(content)
-    # content_len = str(content_len).zfill(MSG_LEN_PADDING).encode()  # zfill and convert to bytes
-    # content = content_len + content  # join the len in front of the content
     content = add_prefix(content)
 
     socket.send(content)
@@ -54,4 +53,13 @@ def send_bin(socket, content):
 
 
 def receive_bin(socket):
-    pass
+    data = b''
+    while True:
+        chunk = receive(socket).encode()
+
+        if chunk == b'-1':
+            break
+
+        data += chunk
+
+    return data

@@ -3,7 +3,7 @@ import protocol
 
 SERVER_IP = '127.0.0.1'
 SERVER_PORT = 4000
-EXIT_CODES = {'quit', 'exit', 'illegal request'}
+EXIT_CODES = {'quit', 'exit'}
 
 
 def main():

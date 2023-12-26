@@ -3,8 +3,10 @@ import glob
 import os
 import shutil
 import subprocess
+import protocol
 
 SCREENSHOT_PATH = r'c:\technitian_server\screenshot.png'
+FILE_PATH = r'c:\technitian_server'
 
 
 def main():
@@ -42,12 +44,23 @@ def execute(program):
     return 'program executed'
 
 
+def echo(msg):
+    return msg
+
+
 def quit():
     return 'quit'
 
 
 def exit():
     return 'exit'
+
+
+def receive_file_request(sock, req):
+    file_name = os.path.basename(req.split()[1])
+    content = b''
+    with open(os.path.join(FILE_PATH, file_name), 'wb') as file:
+        content += protocol.receive_bin(sock)
 
 
 if __name__ == '__main__':
