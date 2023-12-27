@@ -1,9 +1,8 @@
 import socket
 import protocol
+from constants import *
 
 SERVER_IP = '127.0.0.1'
-SERVER_PORT = 4000
-EXIT_CODES = {'quit', 'exit'}
 
 
 def main():
@@ -22,7 +21,7 @@ def main():
 
 def init():
     sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-    sock.connect((SERVER_IP, SERVER_PORT))
+    sock.connect((SERVER_IP, PORT))
 
     return sock
 

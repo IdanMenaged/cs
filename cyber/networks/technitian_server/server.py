@@ -1,11 +1,10 @@
 import socket
 import protocol
 import methods
+from constants import *
 
 IP = '0.0.0.0'
-PORT = 4000
 SIM_USERS = 1  # n of simultaneous users
-EXIT_CODES = {'quit', 'exit'}
 
 
 def main():
