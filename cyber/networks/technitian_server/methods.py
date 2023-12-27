@@ -56,10 +56,10 @@ def exit():
     return 'exit'
 
 
-def receive_file_request(sock, req):
-    file_name = os.path.basename(req.split()[1])
-    with open(os.path.join(FILE_PATH, file_name), 'wb') as file:
-        file.write(protocol.receive_bin(sock))
+def save_to_file(path, content):
+    with open(path, 'wb') as file:
+        file.write(content)
+    return f'saved to {path}'
 
 
 if __name__ == '__main__':

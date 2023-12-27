@@ -1,6 +1,8 @@
 import socket
 import protocol
 from constants import *
+import methods
+import os
 
 SERVER_IP = '127.0.0.1'
 
@@ -30,10 +32,15 @@ def request(sock, req):
     protocol.send(sock, req)
     print('sending req')
 
+    # determine protocol
     if req.split()[0] in BIN_METHODS:
         res = protocol.receive_bin(sock)
     else:
         res = protocol.receive(sock)
+
+    # special exceptions
+    if req.split()[0] == 'send_file':
+        res = methods.save_to_file(os.path.join(SAVE_FILE_TO, req.split()[1]), res)
     return res
 
 
