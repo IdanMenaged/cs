@@ -30,7 +30,7 @@ def init():
 def request(sock, req):
     protocol.send(sock, req)
     print('sending req')
-    res = protocol.receive(sock)
+    res = protocol.receive_bin(sock)
     return res
 
 

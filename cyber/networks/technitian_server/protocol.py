@@ -1,8 +1,6 @@
 MSG_LEN_PADDING = 4  # n of bytes to put in front of the content to show it's len
 MAX_CHUNK_SIZE = 1024
-BIN_DONE = -1
-
-# TODO: test send_bin and receive_bin. if doesn't work, try using files
+BIN_DONE = -1  # code to send when a binary is over
 
 
 def add_prefix(content):
@@ -48,6 +46,7 @@ def send_bin(socket, content):
         chunk_size = max(MAX_CHUNK_SIZE, len(content))  # sometimes the content is not perfectly divisible by
         # MAX_CHUNK_SIZE
         chunk = content[:chunk_size]
+        len_sent += len(chunk)
         socket.send(add_prefix(chunk))
     socket.send(add_prefix(str(BIN_DONE).encode()))
 

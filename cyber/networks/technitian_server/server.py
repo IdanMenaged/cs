@@ -41,7 +41,7 @@ def handle_client(server_socket):
 
         res = handle_req(req)
 
-        protocol.send(client_socket, res)
+        protocol.send_bin(client_socket, res)
         print('msg sent')
 
         if res in EXIT_CODES:
