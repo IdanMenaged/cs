@@ -1,4 +1,4 @@
-MSG_LEN_PADDING = 4  # n of bytes to put in front of the content to show it's len
+MSG_LEN_PADDING = 4  # n of bytes to put in front of the content to show its len
 MAX_CHUNK_SIZE = 1024
 BIN_DONE = -1  # code to send when a binary is over
 

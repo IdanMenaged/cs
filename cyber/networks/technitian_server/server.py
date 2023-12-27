@@ -2,6 +2,8 @@ import socket
 import protocol
 import methods
 from constants import *
+import importlib
+import sys
 
 IP = '0.0.0.0'
 SIM_USERS = 1  # n of simultaneous users
@@ -56,9 +58,21 @@ def handle_client(server_socket):
 def handle_req(req):
     try:
         cmd, *params = req.split()
-        return getattr(methods, cmd)(*params)
+        res = getattr(methods, cmd)(*params)
+
+        # special exception
+        if cmd == 'reload':
+            res = on_reload()
+
+        return res
+
     except AttributeError or ValueError:
         return 'illegal request'
+
+
+def on_reload():
+    importlib.reload(sys.modules[__name__])
+    return 'reloaded'
 
 
 if __name__ == '__main__':

@@ -44,6 +44,11 @@ def execute(program):
     return 'program executed'
 
 
+def reload():
+    send_file('.')
+    return 'sent updated file'
+
+
 def echo(msg):
     return msg
 
