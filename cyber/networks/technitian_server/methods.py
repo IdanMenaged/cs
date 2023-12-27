@@ -10,7 +10,7 @@ FILE_PATH = r'c:\technitian_server'
 
 
 def main():
-    dir(r'c:\technitian_server')
+    pass
 
 
 def take_screenshot():

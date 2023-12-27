@@ -29,7 +29,11 @@ def init():
 def request(sock, req):
     protocol.send(sock, req)
     print('sending req')
-    res = protocol.receive_bin(sock)
+
+    if req.split()[0] in BIN_METHODS:
+        res = protocol.receive_bin(sock)
+    else:
+        res = protocol.receive(sock)
     return res
 
 

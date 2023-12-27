@@ -35,12 +35,15 @@ def handle_client(server_socket):
     print('client accepted')
 
     while True:
-        req = protocol.receive(client_socket)
+        req = protocol.receive(client_socket).lower()
         print('msg received')
 
         res = handle_req(req)
 
-        protocol.send_bin(client_socket, res)
+        if req.split()[0] in BIN_METHODS:
+            protocol.send_bin(client_socket, res)
+        else:
+            protocol.send(client_socket, res)
         print('msg sent')
 
         if res in EXIT_CODES:
@@ -51,7 +54,6 @@ def handle_client(server_socket):
 
 
 def handle_req(req):
-    req = req.lower()
     try:
         cmd, *params = req.split()
         return getattr(methods, cmd)(*params)
