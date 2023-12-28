@@ -1,8 +1,8 @@
 package auction;
 
 public class Bid {
-    Person bidder; // the person placing the bid
-    int value; // value of the bid
+    private Person bidder; // the person placing the bid
+    private int value; // value of the bid
 
     /**
      * create a new bid

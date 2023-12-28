@@ -5,8 +5,8 @@ public class Item {
 
     private int itemId; // id of the item
     private String itemName; // name of the item
-    Bid highBid; // highest bid placed on this item
-    boolean sold; // was the item sold yet
+    private Bid highBid; // highest bid placed on this item
+    private boolean sold; // was the item sold yet
 
     /**
      * create a new item
@@ -44,6 +44,38 @@ public class Item {
     }
 
     /**
+     * get item id
+     * @return item id
+     */
+    public int getItemId() {
+        return this.itemId;
+    }
+
+    /**
+     * get sold
+     * @return was item sold yet?
+     */
+    public boolean getSold() {
+        return this.sold;
+    }
+
+    /**
+     * get high bid
+     * @return high bid
+     */
+    public Bid getFinalOffer() {
+        return this.highBid;
+    }
+
+    /**
+     * get person placing high bid
+     * @return bidder
+     */
+    public Person getBuyer() {
+        return this.highBid.getBidder();
+    }
+
+    /**
      * check if the new bid is the highest
      * update highBid accordingly
      * @param b new bid
@@ -56,5 +88,12 @@ public class Item {
 
         this.highBid = new Bid(b);
         return true;
+    }
+
+    /**
+     * set item status to sold
+     */
+    public void close() {
+        this.sold = true;
     }
 }
