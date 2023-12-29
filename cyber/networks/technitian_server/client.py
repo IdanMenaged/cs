@@ -42,7 +42,7 @@ def request(sock, req):
     else:
         res = protocol.receive(sock)
 
-    # special exceptions
+    # special exception
     if req.split()[0] == 'send_file':
         res = methods.save_to_file(os.path.join(SAVE_FILE_TO, req.split()[1]), res)
     return res
