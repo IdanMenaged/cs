@@ -1,9 +1,13 @@
+import importlib
+import sys
+
 from PIL import ImageGrab
 import glob
 import os
 import shutil
 import subprocess
 from constants import *
+from networks.technitian_server import protocol
 
 SCREENSHOT_PATH = r'c:\technitian_server\screenshot.png'
 FILE_PATH = r'c:\technitian_server'
@@ -44,10 +48,6 @@ def execute(program):
     return 'program executed'
 
 
-def reload():
-    return send_file(METHODS_PATH)
-
-
 def echo(msg):
     return msg
 
@@ -58,6 +58,15 @@ def quit():
 
 def exit():
     return 'exit'
+
+
+def handle_reload(sock):
+    protocol.send(sock, 'ready for reload')
+    data = protocol.receive_bin(sock)
+    save_to_file(METHODS_PATH, data)
+
+    importlib.reload(sys.modules[__name__])
+    return 'reloaded'
 
 
 def save_to_file(path, content):

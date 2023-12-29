@@ -29,10 +29,6 @@ def init():
 
 
 def request(sock, req):
-    # special exception
-    if req.split()[0] == 'reload':
-        req += ' ' + methods.reload().decode()  # adds the reload params to the request
-
     protocol.send(sock, req)
     print('sending req')
 
@@ -45,7 +41,15 @@ def request(sock, req):
     # special exception
     if req.split()[0] == 'send_file':
         res = methods.save_to_file(os.path.join(SAVE_FILE_TO, req.split()[1]), res)
+    elif req == 'reload':
+        res = handle_reload(sock)
     return res
+
+
+def handle_reload(sock):
+    content = methods.send_file(METHODS_PATH)
+    protocol.send_bin(sock, content)
+    return protocol.receive(sock)
 
 
 if __name__ == '__main__':

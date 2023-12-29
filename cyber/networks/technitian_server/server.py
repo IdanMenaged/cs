@@ -40,7 +40,7 @@ def handle_client(server_socket):
         req = protocol.receive(client_socket).lower()
         print('msg received')
 
-        res = handle_req(req)
+        res = handle_req(client_socket, req)
 
         if req.split()[0] in BIN_METHODS:
             protocol.send_bin(client_socket, res)
@@ -55,20 +55,22 @@ def handle_client(server_socket):
     return res == 'exit'
 
 
-def handle_req(req):
+def handle_req(sock, req):
     cmd, *params = req.split()
 
     # special exception
     if cmd == 'reload':
-        res = on_reload(params)
+        res = methods.handle_reload(sock)
     else:
         res = getattr(methods, cmd)(*params)
 
     return res
 
 
-def on_reload(new_data):
-    methods.save_to_file(METHODS_PATH, new_data)
+def handle_reload(sock):
+    protocol.send(sock, 'ready for reload')
+    data = protocol.receive_bin(sock)
+    methods.save_to_file(METHODS_PATH, data)
 
     importlib.reload(sys.modules[__name__])
     return 'reloaded'
