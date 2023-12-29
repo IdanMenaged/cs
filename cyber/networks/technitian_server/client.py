@@ -29,6 +29,10 @@ def init():
 
 
 def request(sock, req):
+    # special exception
+    if req.split()[0] == 'reload':
+        req += ' ' + methods.reload().decode()  # adds the reload params to the request
+
     protocol.send(sock, req)
     print('sending req')
 

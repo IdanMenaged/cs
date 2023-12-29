@@ -56,21 +56,20 @@ def handle_client(server_socket):
 
 
 def handle_req(req):
-    try:
-        cmd, *params = req.split()
+    cmd, *params = req.split()
+
+    # special exception
+    if cmd == 'reload':
+        res = on_reload(params)
+    else:
         res = getattr(methods, cmd)(*params)
 
-        # special exception
-        if cmd == 'reload':
-            res = on_reload()
-
-        return res
-
-    except AttributeError or ValueError:
-        return 'illegal request'
+    return res
 
 
-def on_reload():
+def on_reload(new_data):
+    methods.save_to_file(METHODS_PATH, new_data)
+
     importlib.reload(sys.modules[__name__])
     return 'reloaded'
 
