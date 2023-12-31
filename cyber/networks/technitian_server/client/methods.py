@@ -7,7 +7,7 @@ import os
 import shutil
 import subprocess
 from constants import *
-from networks.technitian_server import protocol
+from networks.technitian_server.server import protocol
 
 SCREENSHOT_PATH = r'c:\technitian_server\screenshot.png'
 FILE_PATH = r'c:\technitian_server'
