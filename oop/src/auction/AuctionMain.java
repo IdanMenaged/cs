@@ -37,12 +37,22 @@ public class AuctionMain {
 
             // mark sold
             if (i == 1 || i == 3) {
-                item.
+                item.close();
             }
+
+            auction.addItem(item);
 
             // add bid
             Person bidder = new Person(bidderName);
             auction.addBid(i, bidder, offer);
         }
+
+        // find n of items sold
+        auction.printSoldCount();
+
+        // find highest price
+        System.out.println("Highest sold: " + auction.highestSold());
+
+        //
     }
 }
