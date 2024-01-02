@@ -31,22 +31,27 @@ def request(sock, req):
     if not valid_request(req):
         return 'illegal request'
 
-    protocol.send(sock, req)
+    try:
+        protocol.send(sock, req)
 
-    # determine protocol
-    if req.split()[0] in BIN_METHODS:
-        res = protocol.receive_bin(sock)
-    else:
-        res = protocol.receive(sock)
+        # determine protocol
+        if req.split()[0] in BIN_METHODS:
+            res = protocol.receive_bin(sock)
+            if res == b'illegal command':
+                res = res.decode()
+        else:
+            res = protocol.receive(sock)
 
-    # special exception
-    if req.split()[0] == 'send_file':
-        methods.save_to_file(os.path.join(SAVE_FILE_TO, os.path.basename(req.split()[1])), res)
-        # methods.save_to_file(os.path.join(SAVE_FILE_TO, req.split()[1], res))
-        res = 'file sent'
-    elif req == 'reload':
-        res = handle_reload(sock)
-    return res
+        # special exception
+        if req.split()[0] == 'send_file' and res != 'illegal command':
+            methods.save_to_file(os.path.join(SAVE_FILE_TO, os.path.basename(req.split()[1])), res)
+            # methods.save_to_file(os.path.join(SAVE_FILE_TO, req.split()[1], res))
+            res = 'file sent'
+        elif req == 'reload':
+            res = handle_reload(sock)
+        return res
+    except:
+        pass
 
 
 def valid_request(req):

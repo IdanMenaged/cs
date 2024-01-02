@@ -39,7 +39,7 @@ def handle_client(server_socket):
 
         res = handle_req(client_socket, req)
 
-        if req.split()[0] in BIN_METHODS and res != 'illegal command':
+        if req.split()[0] in BIN_METHODS:
             protocol.send_bin(client_socket, res)
         else:
             protocol.send(client_socket, res)
@@ -61,7 +61,10 @@ def handle_req(sock, req):
         try:
             res = getattr(methods, cmd)(*params)
         except:
-            res = 'illegal command'
+            if cmd in BIN_METHODS:
+                res = b'illegal command'
+            else:
+                res = 'illegal command'
 
     return res
 

@@ -1,3 +1,1 @@
-please enter a request reloaded
-please enter a request screenshot taken
-please enter a request quit
+please enter a request 
