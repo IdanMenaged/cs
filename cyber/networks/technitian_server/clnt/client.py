@@ -49,9 +49,10 @@ def request(sock, req):
             res = 'file sent'
         elif req == 'reload':
             res = handle_reload(sock)
-        return res
     except:
-        pass
+        res = 'quit'
+
+    return res
 
 
 def valid_request(req):
