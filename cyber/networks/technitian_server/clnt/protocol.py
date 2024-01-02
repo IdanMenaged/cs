@@ -43,7 +43,7 @@ def receive(socket):
 def send_bin(socket, content):
     len_sent = 0
     while len_sent < len(content):
-        chunk_size = max(MAX_CHUNK_SIZE, len(content))  # sometimes the content is not perfectly divisible by
+        chunk_size = min(MAX_CHUNK_SIZE, len(content))  # sometimes the content is not perfectly divisible by
         # MAX_CHUNK_SIZE
         chunk = content[:chunk_size]
         len_sent += len(chunk)
@@ -54,7 +54,19 @@ def send_bin(socket, content):
 def receive_bin(socket):
     data = b''
     while True:
-        chunk = receive(socket).encode()
+        content_len = 0
+        len_received = 0
+        while len_received < MSG_LEN_PADDING:
+            packet = socket.recv(MSG_LEN_PADDING)
+            len_received += len(packet)
+            content_len += int(packet.decode())
+
+        len_received = 0
+        chunk = b""
+        while len_received < content_len:
+            packet = socket.recv(content_len)
+            len_received += len(packet)
+            chunk += packet
 
         if chunk == b'-1':
             break
