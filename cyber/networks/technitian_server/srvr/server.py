@@ -69,14 +69,5 @@ def handle_req(sock, req):
     return res
 
 
-def handle_reload(sock):
-    protocol.send(sock, 'ready for reload')
-    data = protocol.receive_bin(sock)
-    methods.save_to_file(METHODS_PATH, data)
-
-    importlib.reload(sys.modules[__name__])
-    return 'reloaded'
-
-
 if __name__ == '__main__':
     main()
