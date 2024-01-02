@@ -9,8 +9,8 @@ import subprocess
 from constants import *
 from networks.technitian_server.srvr import protocol
 
-SCREENSHOT_PATH = r'c:\technitian_server\screenshot.png'
-FILE_PATH = r'c:\technitian_server'
+SCREENSHOT_PATH = 'c:\\test_folder\\server\\screen.jpg'
+FILE_PATH = 'c:\\test_folder\\client'
 
 
 def main():
@@ -18,7 +18,7 @@ def main():
 
 
 def take_screenshot():
-    im = ImageGrab.grab()  # :0 means the first monitor
+    im = ImageGrab.grab()
     im.save(SCREENSHOT_PATH)
     return 'screenshot taken'
 

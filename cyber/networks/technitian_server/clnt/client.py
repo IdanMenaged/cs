@@ -9,11 +9,10 @@ SERVER_IP = '127.0.0.1'
 
 def main():
     sock = init()
-    print('starting client')
 
     while True:
-        res = request(sock, input('enter cmd: '))
-        print(f'received res {res}')
+        res = request(sock, input('please enter a request '))
+        print(res)
 
         if res in EXIT_CODES:
             break
@@ -29,8 +28,10 @@ def init():
 
 
 def request(sock, req):
+    if not valid_request(req):
+        return 'illegal request'
+
     protocol.send(sock, req)
-    print('sending req')
 
     # determine protocol
     if req.split()[0] in BIN_METHODS:
@@ -40,10 +41,17 @@ def request(sock, req):
 
     # special exception
     if req.split()[0] == 'send_file':
-        res = methods.save_to_file(os.path.join(SAVE_FILE_TO, req.split()[1]), res)
+        methods.save_to_file(os.path.join(SAVE_FILE_TO, os.path.basename(req.split()[1])), res)
+        # methods.save_to_file(os.path.join(SAVE_FILE_TO, req.split()[1], res))
+        res = 'file sent'
     elif req == 'reload':
         res = handle_reload(sock)
     return res
+
+
+def valid_request(req):
+    cmd, *params = req.split()
+    return cmd in PARAM_COUNTS.keys() and len(params) == PARAM_COUNTS[cmd]
 
 
 def handle_reload(sock):

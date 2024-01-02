@@ -11,7 +11,6 @@ SIM_USERS = 1  # n of simultaneous users
 
 def main():
     sock = init()
-    print('starting server')
     handle_clients(sock)
     sock.close()
 
@@ -34,19 +33,16 @@ def handle_clients(sock):
 
 def handle_client(server_socket):
     client_socket, addr = server_socket.accept()
-    print('client accepted')
 
     while True:
         req = protocol.receive(client_socket).lower()
-        print('msg received')
 
         res = handle_req(client_socket, req)
 
-        if req.split()[0] in BIN_METHODS:
+        if req.split()[0] in BIN_METHODS and res != 'illegal command':
             protocol.send_bin(client_socket, res)
         else:
             protocol.send(client_socket, res)
-        print('msg sent')
 
         if res in EXIT_CODES:
             break
@@ -62,7 +58,10 @@ def handle_req(sock, req):
     if cmd == 'reload':
         res = methods.handle_reload(sock)
     else:
-        res = getattr(methods, cmd)(*params)
+        try:
+            res = getattr(methods, cmd)(*params)
+        except:
+            res = 'illegal command'
 
     return res
 
