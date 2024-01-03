@@ -14,7 +14,7 @@ public class Auction {
         auction.addBid(0, p, 200);
         p = new Person("otherman");
         auction.addBid(0, p, 100);
-        System.out.println(auction.items[0].getBuyer().getName());
+        System.out.println(auction.highestSold());
     }
 
     /**
@@ -71,7 +71,7 @@ public class Auction {
 
     /**
      * find the item sold for the highest price
-     * @return name of the item (none of no items were sold)
+     * @return name if the item (none of no items were sold)
      */
     public String highestSold() {
         int highestBid = -1, i;
@@ -83,11 +83,19 @@ public class Auction {
                 val = item.getFinalOffer().getValue();
             }
 
-            if (item.getSold() && item.getFinalOffer().getValue() > highestBid) {
-                highestBid = item.getFinalOffer().getValue();
+            if (item.getSold() && val > highestBid) {
+                highestBid = val;
                 highestName = item.getItemName();
             }
         }
         return highestName;
+    }
+
+    /**
+     * mark the item at the given index as sold
+     * @param index index of the item
+     */
+    public void markSold(int index) {
+        this.items[index].close();
     }
 }

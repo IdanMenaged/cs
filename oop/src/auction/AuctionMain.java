@@ -3,7 +3,7 @@ package auction;
 import java.util.Scanner;
 
 public class AuctionMain {
-    private static final int N_ITEMS = 5;
+    private static final int N_ITEMS = 4;
 
     public static Scanner reader = new Scanner(System.in);
 
@@ -35,16 +35,16 @@ public class AuctionMain {
             // add item
             Item item = new Item(itemName);
 
-            // mark sold
-            if (i == 2 || i == 4) {
-                item.close();
-            }
-
             auction.addItem(item);
 
             // add bid
             Person bidder = new Person(bidderName);
             auction.addBid(i, bidder, offer);
+
+            // mark sold
+            if (i == 2 || i == 4) {
+                auction.markSold(i - 1);
+            }
         }
 
         // find n of items sold
@@ -52,7 +52,5 @@ public class AuctionMain {
 
         // find highest price
         System.out.println("Highest sold: " + auction.highestSold());
-
-        //
     }
 }
