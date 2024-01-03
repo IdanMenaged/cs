@@ -46,6 +46,7 @@ def send_bin(socket, content):
         chunk_size = min(MAX_CHUNK_SIZE, len(content))  # sometimes the content is not perfectly divisible by
         # MAX_CHUNK_SIZE
         chunk = content[:chunk_size]
+        content = content[chunk_size:]
         len_sent += len(chunk)
         socket.send(add_prefix(chunk))
     socket.send(add_prefix(str(BIN_DONE).encode()))
