@@ -23,7 +23,7 @@ public class AuctionMain {
         int i, offer;
         String itemName, bidderName;
 
-        for (i = 0; i < AuctionMain.N_ITEMS; i++) {
+        for (i = 1; i <= AuctionMain.N_ITEMS; i++) {
             // input
             System.out.println("please enter item name");
             itemName = reader.next();
@@ -36,7 +36,7 @@ public class AuctionMain {
             Item item = new Item(itemName);
 
             // mark sold
-            if (i == 1 || i == 3) {
+            if (i == 2 || i == 4) {
                 item.close();
             }
 

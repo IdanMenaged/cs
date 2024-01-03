@@ -6,6 +6,17 @@ public class Auction {
     private Item[] items; // all items
     private int current; // current n of items
 
+    public static void main(String[] args) {
+        Auction auction = new Auction();
+        Item item = new Item("item1");
+        auction.addItem(item);
+        Person p = new Person("namenson");
+        auction.addBid(0, p, 200);
+        p = new Person("otherman");
+        auction.addBid(0, p, 100);
+        System.out.println(auction.items[0].getBuyer().getName());
+    }
+
     /**
      * constructor
      * sets items to an empty array of size MAX_ITEMS
@@ -41,20 +52,21 @@ public class Auction {
      */
     public boolean addBid(int itemIndex, Person bidder, int value) {
         Bid bid = new Bid(bidder, value);
-        return this.items[itemIndex].bidFor(bid);
+        return this.items[itemIndex - 1].bidFor(bid);
     }
 
     /**
      * print n of sold items
      */
     public void printSoldCount() {
-        int count = 0;
-        for (Item item : this.items) {
+        int count = 0, i;
+        for (i = 0; i < this.current; i++) {
+            Item item = this.items[i];
             if (item.getSold()) {
                 count++;
             }
         }
-        System.out.println("Number of sold items: " + count);
+        System.out.println("Number of sold items is: " + count);
     }
 
     /**
@@ -62,9 +74,15 @@ public class Auction {
      * @return name of the item (none of no items were sold)
      */
     public String highestSold() {
-        int highestBid = -1;
+        int highestBid = -1, i;
         String highestName = "none";
-        for (Item item : this.items) {
+        for (i = 0; i < this.current; i++) {
+            Item item = this.items[i];
+            int val = -1;
+            if (item.getFinalOffer() != null) {
+                val = item.getFinalOffer().getValue();
+            }
+
             if (item.getSold() && item.getFinalOffer().getValue() > highestBid) {
                 highestBid = item.getFinalOffer().getValue();
                 highestName = item.getItemName();

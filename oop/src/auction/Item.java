@@ -31,7 +31,15 @@ public class Item {
     public Item(Item item) {
         this.itemId = item.itemId;
         this.itemName = item.itemName;
-        this.highBid = new Bid(item.highBid);
+
+        // edge case
+        if (item.highBid == null) {
+            this.highBid = null;
+        }
+        else {
+            this.highBid = new Bid(item.highBid);
+        }
+
         this.sold = item.sold;
     }
 
@@ -82,7 +90,7 @@ public class Item {
      * @return was b the highest bid?
      */
     public boolean bidFor(Bid b) {
-        if (b.getValue() < this.highBid.getValue() || this.sold) {
+        if ((this.highBid != null && b.getValue() < this.highBid.getValue()) || this.sold) {
             return false;
         }
 

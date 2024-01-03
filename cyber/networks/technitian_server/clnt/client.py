@@ -45,7 +45,6 @@ def request(sock, req):
         # special exception
         if req.split()[0] == 'send_file' and res != 'illegal command':
             methods.save_to_file(os.path.join(SAVE_FILE_TO, os.path.basename(req.split()[1])), res)
-            # methods.save_to_file(os.path.join(SAVE_FILE_TO, req.split()[1], res))
             res = 'file sent'
         elif req == 'reload':
             res = handle_reload(sock)
