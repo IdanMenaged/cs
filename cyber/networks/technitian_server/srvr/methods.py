@@ -20,7 +20,7 @@ def main():
 def take_screenshot():
     im = ImageGrab.grab()
     im.save(SCREENSHOT_PATH)
-    return 'screenshot taken'
+    return 'screenshot takenn'
 
 
 def send_file(file_path):
@@ -66,7 +66,7 @@ def handle_reload(sock):
     save_to_file(METHODS_PATH, data)
 
     importlib.reload(sys.modules[__name__])
-    return 'reloaded'
+    return 'module reloaded'
 
 
 def save_to_file(path, content):
