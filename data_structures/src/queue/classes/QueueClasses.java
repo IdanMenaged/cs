@@ -18,14 +18,12 @@ public class QueueClasses {
 
     /**
      * count how many times a number appears in a q
+     * note: flags must be inserted and removed outside function
      * @param q queue of integers
      * @param n number to count appearances of
      * @return number of times n appears in q
      */
     private static int countAppearances(Queue<Integer> q, int n) {
-        // insert flag
-        q.insert(null);
-
         int count = 0;
 
         // go over q
@@ -38,8 +36,7 @@ public class QueueClasses {
             q.insert(q.remove());
         }
 
-        // remove flag
-        q.remove();
+        // TODO: use copy rather than null flag
 
         return count;
     }

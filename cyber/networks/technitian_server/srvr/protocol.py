@@ -4,6 +4,11 @@ BIN_DONE = -1  # code to send when a binary is over
 
 
 def add_prefix(content):
+    """
+    adds a prefix containing the length of the content
+    :param content: content
+    :return: content with the prefix
+    """
     return str(len(content)).zfill(MSG_LEN_PADDING).encode() + content
 
 
@@ -41,6 +46,11 @@ def receive(socket):
 
 
 def send_bin(socket, content):
+    """
+    send binary data
+    :param socket: socket
+    :param content: content to send
+    """
     len_sent = 0
     len_to_send = len(content)
     while len_sent < len_to_send:
@@ -54,6 +64,11 @@ def send_bin(socket, content):
 
 
 def receive_bin(socket):
+    """
+    receive binary data
+    :param socket: socket
+    :return: data received
+    """
     data = b''
     while True:
         content_len = 0
