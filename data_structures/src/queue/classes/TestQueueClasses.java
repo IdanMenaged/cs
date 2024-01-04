@@ -9,6 +9,8 @@ import org.junit.Ignore;
 import junit.framework.*;
 
 import java.lang.reflect.*;
+
+import queue.Queue;
 public class TestQueueClasses extends TestCase
 {
     

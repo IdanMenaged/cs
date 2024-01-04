@@ -1,6 +1,8 @@
 package queue.classes;
 
-public class Customer4Students
+import queue.Queue;
+
+public class Customer
 { 
     private String name;    // customer's name
     private int age;        // customer's age
