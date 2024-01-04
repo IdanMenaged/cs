@@ -46,6 +46,26 @@ public class QueueClasses {
     }
 
     /**
+     * remove a number from a queue
+     * @param q queue
+     * @param n number to remove
+     */
+    private static void removeFromQ(Queue<Integer> q, int n) {
+        q.insert(null);
+
+        while (q.head() != null) {
+            if (q.head() != n) {
+                q.insert(q.remove());
+            }
+            else {
+                q.remove();
+            }
+        }
+
+        q.remove();
+    }
+
+    /**
      * find the best runner in a queue
      * @param q queue of runners
      * @return name of best runner
@@ -86,7 +106,6 @@ public class QueueClasses {
      * @return queue of pairs based on the rules above
      */
     public static Queue<Pair> howMany(Queue<Integer> q) {
-        // TODO: fix duplicate entries
         Queue<Integer> qCopy = new Queue<>();
 
         // go over q
@@ -96,7 +115,10 @@ public class QueueClasses {
             out.insert(pair);
 
             // store a copy
-            qCopy.insert(q.remove());
+            qCopy.insert(q.head());
+
+            // remove from q so that each number only appears once in out
+            removeFromQ(q, q.head());
         }
 
         // restore q
