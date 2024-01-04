@@ -7,7 +7,7 @@ import os
 import shutil
 import subprocess
 from constants import *
-from networks.technitian_server.srvr import protocol
+import protocol
 
 SCREENSHOT_PATH = 'c:\\test_folder\\server\\screen.jpg'
 FILE_PATH = 'c:\\test_folder\\client'
@@ -20,7 +20,7 @@ def take_screenshot():
     """
     im = ImageGrab.grab()
     im.save(SCREENSHOT_PATH)
-    return 'screenshot takenn'
+    return 'screenshot taken'
 
 
 def send_file(file_path):

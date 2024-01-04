@@ -2,8 +2,6 @@ import socket
 import protocol
 import methods
 from constants import *
-import importlib
-import sys
 
 IP = '0.0.0.0'
 SIM_USERS = 1  # n of simultaneous users
