@@ -24,6 +24,9 @@ public class QueueClasses {
      * @return number of times n appears in q
      */
     private static int countAppearances(Queue<Integer> q, int n) {
+        // insert flag
+        q.insert(null);
+
         int count = 0;
 
         // go over q
@@ -36,7 +39,8 @@ public class QueueClasses {
             q.insert(q.remove());
         }
 
-        // TODO: use copy rather than null flag
+        // remove flag
+        q.remove();
 
         return count;
     }
@@ -82,21 +86,23 @@ public class QueueClasses {
      * @return queue of pairs based on the rules above
      */
     public static Queue<Pair> howMany(Queue<Integer> q) {
-        // insert flag
-        q.insert(null);
+        // TODO: fix duplicate entries
+        Queue<Integer> qCopy = new Queue<>();
 
         // go over q
         Queue<Pair> out = new Queue<>();
-        while (q.head() != null) {
-            Pair pair = new Pair(q.head(), countAppearances(q, q.head())); // FIXME: null appears twice
+        while (!q.isEmpty()) {
+            Pair pair = new Pair(q.head(), countAppearances(q, q.head()));
             out.insert(pair);
 
-            // move to the back of the q
-            q.insert(q.remove());
+            // store a copy
+            qCopy.insert(q.remove());
         }
 
-        // remove flag
-        q.remove();
+        // restore q
+        while (!qCopy.isEmpty()) {
+            q.insert(qCopy.remove());
+        }
 
         return out;
     }
