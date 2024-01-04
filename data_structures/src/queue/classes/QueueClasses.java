@@ -1,10 +1,10 @@
 package queue.classes;
 
+import queue.Queue;
+
 /*
 Idan Menaged
  */
-
-import queue.Queue;
 
 public class QueueClasses {
     public static void main(String[] args) {
@@ -12,6 +12,7 @@ public class QueueClasses {
         for (int i = 0; i < 3; i++) {
             q.insert(new Runner("r" + i, i));
         }
+        System.out.println(bestRunner(q));
     }
 
     /**
@@ -25,16 +26,21 @@ public class QueueClasses {
             return "";
         }
 
+        // insert null
+        q.insert(null);
+
         // init best
         Runner best = q.head();
         q.insert(q.remove());
 
         // go over q
-        q.insert(null);
         while (q.head() != null) {
-            if (best.getSpeed() > q.head().getSpeed()) {
+            if (q.head().getSpeed() > best.getSpeed()) {
                 best = q.head();
             }
+
+            // move to the back of the queue
+            q.insert(q.remove());
         }
 
         // remove null
