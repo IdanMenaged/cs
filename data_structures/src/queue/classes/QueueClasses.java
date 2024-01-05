@@ -118,7 +118,7 @@ public class QueueClasses {
             qCopy.insert(q.head());
 
             // remove from q so that each number only appears once in out
-            removeFromQ(q, q.head());
+            removeFromQ(q, q.head()); // FIXME: corrupts q (maybe remove from out instead)
         }
 
         // restore q
