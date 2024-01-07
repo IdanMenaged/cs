@@ -11,10 +11,10 @@ public class Customer
 
     public static void main(String[] args) {
         Customer c = new Customer("n", 1);
-        c.addMeasure(1, 50);
-        c.addMeasure(3, 48);
-        c.addMeasure(4, 47.5);
-        c.addMeasure(5, 47);
+        c.addMeasure(1, 49.5);
+        c.addMeasure(2, 49);
+        c.addMeasure(4, 48);
+        c.addMeasure(5, 46);
 
         System.out.println(c.bestMeasure());
     }
@@ -92,20 +92,19 @@ public class Customer
         // compare measures
         curr = this.measures.head();
         measuresCopy.insert(this.measures.remove());
-        best = (curr.getWeight() - prev.getWeight()) / (curr.getMonth() - prev.getMonth()); // TODO: calc curr as the next decrease rather than the same as best
-        prev = curr;
-        curr = this.measures.head();
-        measuresCopy.insert(this.measures.remove());
+        currDecrease = (prev.getWeight() - curr.getWeight()) / (curr.getMonth() - prev.getMonth());
+        best = Math.max(currDecrease, 0);
 
         while (!this.measures.isEmpty()) {
-            // compare decreases
-            currDecrease = Math.abs((prev.getWeight() - curr.getWeight()) / (curr.getMonth() - prev.getMonth()));
-            best = Math.min(currDecrease, best); // TODO: check if i need min or max
-
             // remove and store copy
             prev = curr;
             curr = this.measures.head();
             measuresCopy.insert(this.measures.remove());
+
+            // compare decreases
+            currDecrease = (prev.getWeight() - curr.getWeight()) / (curr.getMonth() - prev.getMonth());
+            best = Math.max(currDecrease, best); // TODO: check if i need min or max
+
         }
 
         // restore measures
