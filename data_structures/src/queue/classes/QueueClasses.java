@@ -7,15 +7,6 @@ Idan Menaged
  */
 
 public class QueueClasses {
-    public static void main(String[] args) {
-        Queue<Integer> q = new Queue<>();
-        for (int i = 0; i < 3; i++) {
-            q.insert(i);
-        }
-        q.insert(1);
-        System.out.println(howMany(q));
-    }
-
     /**
      * count how many times a number appears in a q
      * note: flags must be inserted and removed outside function

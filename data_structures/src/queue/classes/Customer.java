@@ -9,6 +9,17 @@ public class Customer
     private Queue<Measurement> measures; // measurements ordered by month
 
 
+    public static void main(String[] args) {
+        Customer c = new Customer("n", 1);
+        c.addMeasure(1, 50);
+        c.addMeasure(3, 48);
+        c.addMeasure(4, 47.5);
+        c.addMeasure(5, 47);
+
+        System.out.println(c.bestMeasure());
+    }
+
+
     /**
      * create a new customer with an empty queue for measures
      * @param name name
@@ -81,15 +92,18 @@ public class Customer
         // compare measures
         curr = this.measures.head();
         measuresCopy.insert(this.measures.remove());
-        best = (curr.getWeight() - prev.getWeight()) / (curr.getMonth() - prev.getMonth());
-        while (!this.measures.isEmpty()) {
-            prev = curr;
+        best = (curr.getWeight() - prev.getWeight()) / (curr.getMonth() - prev.getMonth()); // TODO: calc curr as the next decrease rather than the same as best
+        prev = curr;
+        curr = this.measures.head();
+        measuresCopy.insert(this.measures.remove());
 
+        while (!this.measures.isEmpty()) {
             // compare decreases
-            currDecrease = (curr.getWeight() - prev.getWeight()) / (curr.getMonth() - prev.getMonth());
-            best = Math.min(currDecrease, best);
+            currDecrease = Math.abs((prev.getWeight() - curr.getWeight()) / (curr.getMonth() - prev.getMonth()));
+            best = Math.min(currDecrease, best); // TODO: check if i need min or max
 
             // remove and store copy
+            prev = curr;
             curr = this.measures.head();
             measuresCopy.insert(this.measures.remove());
         }
