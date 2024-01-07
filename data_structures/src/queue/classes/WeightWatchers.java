@@ -37,6 +37,6 @@ public class WeightWatchers {
         }
 
         // find best measurement
-        System.out.println(customer.bestMeasure());
+        System.out.println("Best decrease: " + customer.bestMeasure());
     }
 }
