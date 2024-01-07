@@ -1,5 +1,9 @@
 package car;
 
+/**
+ * Idan Menaged
+ */
+
 public class Car extends Vehicle {
     protected int seats; // n of seats
     protected boolean media; // is there a media player?
