@@ -46,15 +46,15 @@ public class QueueClasses {
     }
 
     /**
-     * remove a number from a queue
+     * remove a queue of pairs, remove all pairs where the first element of the pair is n
      * @param q queue
      * @param n number to remove
      */
-    private static void removeFromQ(Queue<Integer> q, int n) {
+    private static void removeKeyFromQ(Queue<Pair> q, int n) {
         q.insert(null);
 
         while (q.head() != null) {
-            if (q.head() != n) {
+            if (q.head().getNum() != n) {
                 q.insert(q.remove());
             }
             else {
@@ -109,21 +109,25 @@ public class QueueClasses {
         Queue<Integer> qCopy = new Queue<>();
 
         // go over q
-        Queue<Pair> out = new Queue<>();
+        Queue<Pair> outTemp = new Queue<>();
         while (!q.isEmpty()) {
             Pair pair = new Pair(q.head(), countAppearances(q, q.head()));
-            out.insert(pair);
+            outTemp.insert(pair);
 
             // store a copy
-            qCopy.insert(q.head());
-
-            // remove from q so that each number only appears once in out
-            removeFromQ(q, q.head()); // FIXME: corrupts q (maybe remove from out instead)
+            qCopy.insert(q.remove());
         }
 
         // restore q
         while (!qCopy.isEmpty()) {
             q.insert(qCopy.remove());
+        }
+
+        // remove duplicates from out
+        Queue<Pair> out = new Queue<>();
+        while (!outTemp.isEmpty()) {
+            out.insert(outTemp.head());
+            removeKeyFromQ(outTemp, outTemp.head().getNum());
         }
 
         return out;
