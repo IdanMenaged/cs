@@ -24,8 +24,10 @@ public class QueueMethods {
     public static int sumEven(Queue<Integer> q) {
         int sum = 0, n;
 
+        // insert flag
         q.insert(null);
 
+        // go over q and add even numbers to sum
         while (q.head() != null) {
             n = q.remove();
             if (n % 2 == 0) {
@@ -34,6 +36,7 @@ public class QueueMethods {
             q.insert(n);
         }
 
+        // remove flag
         q.remove();
 
         return sum;
@@ -48,8 +51,10 @@ public class QueueMethods {
         Queue<Integer> out = new Queue<>();
         int n;
 
+        // insert flag
         q.insert(null);
 
+        // go over q and add to out (unless it is already in out)
         while (q.head() != null) {
             n = q.remove();
 
@@ -60,6 +65,7 @@ public class QueueMethods {
             q.insert(n);
         }
 
+        // remove flag
         q.remove();
 
         return out;
@@ -75,8 +81,10 @@ public class QueueMethods {
         int curr;
         boolean out = false;
 
+        // insert flag
         q.insert(null);
 
+        // go over q and check if the current number is the searched for number
         while (q.head() != null) {
             curr = q.remove();
 
@@ -87,6 +95,7 @@ public class QueueMethods {
             q.insert(curr);
         }
 
+        // remove flag
         q.remove();
 
         return out;
@@ -97,6 +106,7 @@ public class QueueMethods {
      * @param q a queue
      */
     public static void oddEven(Queue<Integer> q) {
+        // copy q
         Queue<Integer> copy = copyQ(q);
         int n;
 
@@ -133,8 +143,10 @@ public class QueueMethods {
         Queue<Integer> out = new Queue<>();
         int n;
 
+        // insert flag
         q.insert(null);
 
+        // remove number, add both to out and back into q
         while (q.head() != null) {
             n = q.remove();
 
@@ -143,6 +155,7 @@ public class QueueMethods {
             q.insert(n);
         }
 
+        // remove flag
         q.remove();
 
         return out;
@@ -208,18 +221,26 @@ public class QueueMethods {
         Queue<Integer> out = new Queue<>();
         int n1, n2, i;
 
+        // insert flag
         q.insert(null);
+
+        // remove 2 numbers, add to to out accordingly
         while (q.head() != null) {
             n1 = q.remove();
             n2 = q.remove();
 
+            // if both are equal, add one of them
             if (n1 == n2) {
                 out.insert(n1);
-            } else if (n1 > n2) {
+            }
+            // if n1 > n2 add all numbers from n1 to n2 going downwards
+            else if (n1 > n2) {
                 for (i = n1; i >= n2; i--) {
                     out.insert(i);
                 }
-            } else {
+            }
+            // if n1 < n2 add all numbers from n1 to n2 going upwards
+            else {
                 for (i = n1; i <= n2; i++) {
                     out.insert(i);
                 }
@@ -228,6 +249,8 @@ public class QueueMethods {
             q.insert(n1);
             q.insert(n2);
         }
+
+        // remove flag
         q.remove();
 
         return out;
