@@ -71,7 +71,7 @@ public class QueueMethods {
      * @param q queue
      * @return true if n is in q
      */
-    static boolean isInQ(int n, Queue<Integer> q) {
+    private static boolean isInQ(int n, Queue<Integer> q) {
         int curr;
         boolean out = false;
 
@@ -129,7 +129,7 @@ public class QueueMethods {
      * @param q a queue
      * @return new queue
      */
-    static Queue<Integer> copyQ(Queue<Integer> q) {
+    private static Queue<Integer> copyQ(Queue<Integer> q) {
         Queue<Integer> out = new Queue<>();
         int n;
 
