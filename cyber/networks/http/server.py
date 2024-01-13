@@ -20,7 +20,8 @@ EXTENSION_TO_TYPE = {
 }
 # convert between old file names and the updated files
 REDIRECTION_DICTIONARY = {
-    '/js/box1.js': '/js/box.js'
+    '/js/box1.js': '/js/box.js',
+    '/imgs/abstract1.jpg': '/imgs/abstract.jpg'
 }
 
 
@@ -40,6 +41,10 @@ def main():
 
 
 def initiate_server_socket():
+    """
+    start a server socket
+    :return: socket
+    """
     server_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
     server_socket.bind((IP, PORT))
     server_socket.listen(10)
@@ -62,6 +67,9 @@ def handle_clients(server_socket):
 
 
 def handle_client(client_socket):
+    """
+    handle a client until connection is closed
+    """
     print('Client connected')
     done = False
     while not done:
@@ -102,17 +110,14 @@ def validate_http_request(request):
     if request.split()[1] in REDIRECTION_DICTIONARY.keys():
         return '302 Moved Temporarily', request.split()[1]
 
-    # check if request is a function call rather than a file
-    func = request.split()[1].split('?')[0]
-    params = request.split()[1].split('?')[1]
-    if func == '/calculate-next':
-        if 'num=' in params:
-            return '200 OK', request.split()[1]
-        return '500 Server Internal Error', None
-    elif func == '/calculate-area':
-        if 'height=' in params.split('&')[0] and 'width=' in params.split('&')[1]:
-            return '200 OK', request.split()[1]
-        return '500 Server Internal Error', None
+    # check if is a function
+    if 'calculate-next' in request.split()[1]:
+        num = request.split()[1].split('num=')[1]
+        return '200 OK', f'calc-next {num}'
+    if 'calculate-area' in request.split()[1]:
+        h = request.split()[1].split('height=')[1].split('&')[0]
+        w = request.split()[1].split('width=')[1]
+        return '200 OK', f'calc-area {h} {w}'
 
     # check path
     path = WEBROOT + request.split()[1].replace('/', '\\')
@@ -121,18 +126,43 @@ def validate_http_request(request):
             return '200 OK', path
     except FileNotFoundError:
         return '404 Not Found', None
+    except:
+        return '500 Server Internal Error', None
 
 
 def file_request(path):
+    """
+    given the path, get the content and content type of the file
+    """
     with open(path, 'rb') as res:
         return res.read(), EXTENSION_TO_TYPE[path.split('.')[-1]]
 
 
 def handle_client_request(resource, client_socket, status):
+    """
+    given resource, socket, and status, handle and send the correct response
+    """
     if status == '200 OK':
         print('requested resource: ' + resource)
-        # retrieve file content and content type
-        data, content_type = file_request(resource)
+
+        # check for functions
+        if 'calc-next' in resource or 'calc-area' in resource:
+            func, *params = resource.split()
+            try:
+                params = [int(param) for param in params]  # convert params to int
+            except ValueError:
+                # invalid params
+                client_socket.send(f'HTTP/1.1 500 Server Internal Error{EOL}{EOL}'.encode())
+                return
+            if func == 'calc-next':
+                data = calc_next(*params)
+                content_type = 'text/plain'
+            elif func == 'calc-area':
+                data = calc_area(*params)
+                content_type = 'text/plain'
+        else:
+            # retrieve file content and content type
+            data, content_type = file_request(resource)
         data_size = str(len(data))
         # finally constructing header
         http_header = 'HTTP/1.1 ' + "200 OK " + EOL + 'Content-Length: ' + data_size + EOL + 'Content-Type: ' +\
@@ -150,11 +180,17 @@ def handle_client_request(resource, client_socket, status):
 
 
 def calc_next(x):
-    return x + 1
+    """
+    calc the next number
+    """
+    return str(x + 1).encode()
 
 
 def calc_area(w, h):
-    return (w * h) / 2
+    """
+    calc the area of a triangle of dimensions w, h
+    """
+    return str((w * h) / 2).encode()
 
 
 if __name__ == '__main__':
