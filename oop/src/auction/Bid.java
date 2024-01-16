@@ -1,4 +1,6 @@
-package auction;
+package auction;/*
+Idan Menaged
+*/
 
 public class Bid {
     private Person bidder; // the person placing the bid
@@ -28,7 +30,7 @@ public class Bid {
      * @return bidder
      */
     public Person getBidder() {
-        return this.bidder;
+        return new Person(this.bidder);
     }
 
     /**

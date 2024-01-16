@@ -1,4 +1,6 @@
-package auction;
+package auction;/*
+Idan Menaged
+*/
 
 public class Item {
     private static int counter = 0; // n of items in existence
@@ -72,7 +74,7 @@ public class Item {
      * @return high bid
      */
     public Bid getFinalOffer() {
-        return this.highBid;
+        return new Bid(this.highBid);
     }
 
     /**

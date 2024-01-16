@@ -1,4 +1,6 @@
-package auction;
+package auction;/*
+Idan Menaged
+*/
 
 public class Auction {
     private static final int MAX_ITEMS = 100;
@@ -45,14 +47,19 @@ public class Auction {
 
     /**
      * add a bid
-     * @param itemIndex index of the bidded item
+     * @param itemId id of the bidded item
      * @param bidder person placing the bid
      * @param value sum of the bid
      * @return was bid accepted?
      */
-    public boolean addBid(int itemIndex, Person bidder, int value) {
+    public boolean addBid(int itemId, Person bidder, int value) {
         Bid bid = new Bid(bidder, value);
-        return this.items[itemIndex - 1].bidFor(bid);
+        for (Item i : this.items) {
+            if (i.getItemId() == itemId) {
+                return i.bidFor(bid);
+            }
+        }
+        return false;
     }
 
     /**
@@ -92,10 +99,14 @@ public class Auction {
     }
 
     /**
-     * mark the item at the given index as sold
-     * @param index index of the item
+     * mark the item at the given id as sold
+     * @param id id of the item
      */
-    public void markSold(int index) {
-        this.items[index].close();
+    public void markSold(int id) {
+        for (Item i : this.items) {
+            if (i.getItemId() == id) {
+                i.close();
+            }
+        }
     }
 }

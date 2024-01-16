@@ -1,4 +1,6 @@
-package auction;
+package auction;/*
+Idan Menaged
+*/
 
 public class Person {
     private String name; // person's name

@@ -1,4 +1,6 @@
-package auction;
+package auction;/*
+Idan Menaged
+*/
 
 import java.util.Scanner;
 
@@ -39,11 +41,11 @@ public class AuctionMain {
 
             // add bid
             Person bidder = new Person(bidderName);
-            auction.addBid(i, bidder, offer);
+            auction.addBid(item.getItemId(), bidder, offer);
 
             // mark sold
             if (i == 2 || i == 4) {
-                auction.markSold(i - 1);
+                auction.markSold(item.getItemId());
             }
         }
 
