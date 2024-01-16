@@ -85,6 +85,12 @@ public class ListAddRemove {
             lst = lst.getNext();
         }
 
+        // edge case - no even numbers
+        // we should return null rather than null -> Null
+        if (out.getValue() == null) {
+            return null;
+        }
+
         return out;
     }
 
@@ -122,6 +128,11 @@ public class ListAddRemove {
      * @param lst list
      */
     public static void delSequence(Node<Integer> lst) {
+        // edge case - list is null
+        if (lst == null) {
+            return;
+        }
+
         Node<Integer> q = lst, p = lst.getNext();
 
         while (p != null) {
