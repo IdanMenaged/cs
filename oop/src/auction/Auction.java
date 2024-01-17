@@ -103,7 +103,7 @@ public class Auction {
      * @param id id of the item
      */
     public void markSold(int id) {
-        for (Item i : this.items) {
+         for (Item i : this.items) {
             if (i.getItemId() == id) {
                 i.close();
             }
