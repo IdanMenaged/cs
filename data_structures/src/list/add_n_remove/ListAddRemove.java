@@ -140,12 +140,11 @@ public class ListAddRemove {
                 q.setNext(p.getNext()); // del p
                 p.setNext(null); // clean up
 
-                p = q.getNext(); // bring p to the new next
             }
             else {
                 q = q.getNext();
-                p = q.getNext();
             }
+            p = q.getNext(); // bring p to the new next
         }
     }
 }
