@@ -16,6 +16,12 @@ public class Animal {
         this.energy = energy;
     }
 
+    public Animal(Animal animal) {
+        this.name = animal.name;
+        this.gender = animal.gender;
+        this.energy = animal.energy;
+    }
+
     // setters
 
     public void setName(String name) {
