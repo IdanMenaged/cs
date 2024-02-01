@@ -1,5 +1,3 @@
-package list;
-
 public class Node<T>
  {
      

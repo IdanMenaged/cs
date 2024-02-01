@@ -1,5 +1,3 @@
-package list;
-
 import java.util.*;
 
 public class ListExample
