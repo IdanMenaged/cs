@@ -30,7 +30,7 @@ def print_url_n_host(p):
         dst = p[IPv6].dst
 
     # get res
-    res = p[Raw].load.split()[1]  # get the http request, the resource should be the second word
+    res = p[Raw].load.split()[1].decode()  # get the http request, the resource should be the second word
 
     # print
     print(f'{dst} -- {res}')
