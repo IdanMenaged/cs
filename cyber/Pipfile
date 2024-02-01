@@ -9,6 +9,7 @@ numpy = "*"
 pyautogui = "*"
 opencv-python = "*"
 psutil = "*"
+scapy = "*"
 
 [dev-packages]
 
