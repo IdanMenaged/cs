@@ -1,5 +1,6 @@
 from scapy.all import *
 from scapy.layers.inet import IP
+from scapy.layers.inet6 import IPv6
 
 N_SNIFFS = 5
 
@@ -19,10 +20,20 @@ def include_http(p):
 
 def print_url_n_host(p):
     """
-    print the ip to which a packet is sent
+    print the ip to which a packet is sent and the requested resource
     :param p: an http packet
     """
-    print(p[IP].dst)
+    # get ip
+    if IP in p:
+        dst = p[IP].dst
+    else:
+        dst = p[IPv6].dst
+
+    # get res
+    res = p[Raw].load.split()[1]  # get the http request, the resource should be the second word
+
+    # print
+    print(f'{dst} -- {res}')
 
 
 def my_sniffs():
