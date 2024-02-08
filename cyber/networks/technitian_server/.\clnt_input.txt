@@ -1,4 +1,0 @@
-reload
-take_screenshot
-quit
-
