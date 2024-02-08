@@ -12,7 +12,7 @@ SRC_PORT = 1234  # source port
 SLEEP_TIME = 0.1
 EOM = '-'  # end of message
 
-msg = input('enter message: ')
+msg = input('please enter a mesaage ')
 for ch in msg:
     port = ord(ch)
     packet = IP(dst=DST_IP) / UDP(sport=SRC_PORT, dport=port)
