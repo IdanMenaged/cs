@@ -1,7 +1,7 @@
 """
 Idan Menaged
 """
-from scapy.layers.inet import UDP
+from scapy.layers.inet import UDP, IP
 from scapy.sendrecv import sniff
 
 SNIFF_COUNT = 1
@@ -15,7 +15,7 @@ def udp_filter(packet):
     :param packet: packet sent
     :return: is packet udp?
     """
-    return UDP in packet
+    return UDP in packet and IP in packet and packet[IP].src == '127.0.0.1' and packet[IP].dst == '127.0.0.1'
 
 
 def add_to_message(packet):
@@ -34,5 +34,6 @@ while True:
     if msg[-1] == EOM:
         msg = msg[:-1]
         break
+    print(msg)
 
 print(msg)
