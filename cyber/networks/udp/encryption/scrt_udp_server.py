@@ -15,7 +15,10 @@ def udp_filter(packet):
     :param packet: packet sent
     :return: is packet udp?
     """
-    return UDP in packet and IP in packet and packet[IP].src == '127.0.0.1' and packet[IP].dst == '127.0.0.1'
+    if UDP in packet and IP in packet and packet[IP].src == packet[IP].dst:
+        print(packet[IP].src)
+
+    return UDP in packet and IP in packet and packet[IP].src == '0.0.0.0' and packet[IP].dst == '0.0.0.0'
 
 
 def add_to_message(packet):
