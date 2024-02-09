@@ -63,7 +63,7 @@ public class ListRecursion {
             return;
         }
 
-        System.out.println(list.getNext().getValue());
+        System.out.println(list.getNext().getValue() + "\r");
         printEvenIndex(list.getNext().getNext());
     }
 
