@@ -6,6 +6,7 @@ from scapy.sendrecv import sniff
 
 SNIFF_COUNT = 1
 EOM = '-'  # end of message
+MSG_LEN = 8
 
 msg = ''
 
@@ -13,12 +14,11 @@ msg = ''
 def udp_filter(packet):
     """
     :param packet: packet sent
-    :return: is packet udp?
+    :return: is packet empty udp?
     """
-    if UDP in packet and IP in packet and packet[IP].src == packet[IP].dst:
-        print(packet[IP].src)
-
-    return UDP in packet and IP in packet and packet[IP].src == '0.0.0.0' and packet[IP].dst == '0.0.0.0'
+    if UDP in packet:
+        print(packet[UDP].len)
+    return UDP in packet and packet[UDP].len == MSG_LEN
 
 
 def add_to_message(packet):
