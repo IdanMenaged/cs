@@ -1,7 +1,8 @@
 """
 Idan Menaged
 """
-from scapy.layers.inet import UDP, IP
+
+from scapy.layers.inet import UDP
 from scapy.sendrecv import sniff
 
 SNIFF_COUNT = 1
