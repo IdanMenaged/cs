@@ -7,7 +7,7 @@ import time
 
 from scapy.sendrecv import send
 
-DST_IP = '127.0.0.1'
+DST_IP = '8.8.8.8'
 SRC_PORT = 1234  # source port
 SLEEP_TIME = 0.1
 EOM = '-'  # end of message

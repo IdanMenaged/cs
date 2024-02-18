@@ -17,8 +17,6 @@ def udp_filter(packet):
     :param packet: packet sent
     :return: is packet empty udp?
     """
-    if UDP in packet:
-        print(packet[UDP].len)
     return UDP in packet and packet[UDP].len == MSG_LEN
 
 
@@ -38,6 +36,5 @@ while True:
     if msg[-1] == EOM:
         msg = msg[:-1]
         break
-    print(msg)
 
 print(msg)
