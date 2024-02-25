@@ -18,29 +18,25 @@ public class ListSummary {
      * @return lst after modification
      */
     public static Node<String> delAllSt(Node<String> lst, String st) {
-        // p - second node
-        // q - first node
-        Node<String> p = lst.getNext(), q = lst;
-
-
-        // edge case - st in first node
-        if (lst.getValue().equals(st))
-        {
+        // edge case - st is first
+        if (lst.getValue().equals(st)) {
             lst = lst.getNext();
         }
 
         // go over lst
-        while (p.hasNext())
-        {
-            q = p;
-            p = p.getNext();
-
-            // del node
-            if (p.getValue().equals(st))
-            {
+        Node<String> q = lst, p = lst.getNext();
+        while (p.hasNext()) {
+            if (p.getValue().equals(st)) {
                 q.setNext(p.getNext());
-                p.setNext(null);
             }
+
+            q = p;
+            p = q.getNext();
+        }
+
+        // edge case = st is last
+        if (p.getValue().equals(st)) {
+            q.setNext(null);
         }
 
         return lst;
