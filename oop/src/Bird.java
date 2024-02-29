@@ -1,5 +1,3 @@
-package zoo;
-
 /**
  * Idan Menaged
  */
@@ -11,6 +9,11 @@ public class Bird extends Animal {
     public Bird(String name, char gender, int energy, int nest) {
         super(name, gender, energy);
         this.nest = nest;
+    }
+
+    public Bird(Bird bird) {
+        super(bird);
+        this.nest = bird.nest;
     }
 
     // setters
