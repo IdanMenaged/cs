@@ -1,166 +1,110 @@
-///**
-// * Idan Menaged
-// */
-//
-//public class ListSummary {
-//    public static void main(String[] args) {
-//        Node<Integer> lst = new Node<>(1,
-//                new Node<>(2,
-//                        new Node<>(3)));
-//        System.out.println(reverse(lst));
-//    }
-//
-//    /**
-//     * delete all occurrences of st from lst
-//     * @param lst a list
-//     * @param st a string
-//     * @return modified list
-//     */
-//    public static Node<String> delAllSt(Node<String> lst, String st) {
-//
-//    /**
-//     * count occurrences of st in lst
-//     * @param lst a list
-//     * @param st a string
-//     * @return count of times st appears in lst
-//     */
-//    private static int countOccurrences(Node<String> lst, String st) {
-//        int count = 0;
-//        while (lst != null) {
-//            if (lst.getValue().equals(st)) {
-//                count++;
-//            }
-//
-//            lst = lst.getNext();
-//        }
-//
-//        return count;
-//    }
-//
-//    /**
-//     * deletes the first instance of x in lst
-//     * @param lst a list
-//     * @param x a string
-//     * @return modified list
-//     */
-//    private static Node<String> deleteByValueFromList(Node<String> lst, String x)
-//    {
-//        // p - second node
-//        // q - first node
-//        Node<String> p = lst.getNext(), q = lst;
-//
-//
-//        // edge case - x is the first value
-//        if (lst.getValue().equals(x))
-//        {
-//            lst = lst.getNext();
-//            return lst;
-//        }
-//
-//        // go over lst until p == x or end of lst
-//        while (p.hasNext() && !p.getValue().equals(x))
-//        {
-//            q = p;
-//            p = p.getNext();
-//        }
-//
-//        // delete the node with x
-//        if (p.getValue().equals(x))
-//        {
-//            q.setNext(p.getNext());
-//            p.setNext(null);
-//        }
-//        return lst;
-//    }
-//
-//    /**
-//     * create a list who's a reverse of the original list
-//     * @param lst a list
-//     * @return the new list
-//     */
-//    public static Node<Integer> reverse(Node<Integer> lst) {
-//        /*
-//        go over lst and change the values in a reverse order
-//         */
-//
-//        // create out's skeleton
-//        int len = length(lst);
-//        Node<Integer> out = new Node<>();
-//        Node<Integer> curr = out;
-//        for (int i = 0; i < len - 1; i++) {
-//            curr.setNext(new Node<>());
-//            curr = curr.getNext();
-//        }
-//
-//        // add values
-//        int count = 0; // counts how far into lst we are
-//        while (lst != null) {
-//            // for each step taken in lst, go from the opposite direction on out
-//            curr = out;
-//            for (int i = 0; i < len - count - 1; i++) {
-//                curr = curr.getNext();
-//            }
-//
-//            // set the value
-//            curr.setValue(lst.getValue());
-//
-//            lst = lst.getNext();
-//            count++;
-//        }
-//
-//        return out;
-//    }
-//
-//    /**
-//     * find out a list's length
-//     * @param lst a list
-//     * @return lst's length
-//     */
-//    private static int length(Node<Integer> lst) {
-//        int out = 0;
-//        while (lst != null) {
-//            out++;
-//            lst = lst.getNext();
-//        }
-//
-//        return out;
-//    }
-//
-//    /**
-//     * count consistent sequences
-//     * @param lst a list
-//     * @return n of sequences
-//     */
-//    public static int consistentCount(Node<Integer> lst) {
-//
-//    }
-//
-//    /**
-//     * checks if a sequence is consistent
-//     * @param start the first node of the sequence
-//     * @return true if sequence is consistent, else false
-//     */
-//    private boolean isConsistent(Node<Integer> start) {
-//        Node<Integer> p = start.getNext(), q = start;
-//        /*
-//        2 options
-//        1. one function to check if it is ascending, one for descending
-//        2. check only first 2 and find a solution for equal numbers
-//         */
-//    }
-//}
 public class ListSummary {
     public static void main(String[] args) {
-
+        Node<Integer> lst = new Node<>(1,
+                new Node<>(2,
+                        new Node<>(3,
+                                new Node<>(-99,
+                                        new Node<>(3,
+                                                new Node<>(2,
+                                                        new Node<>(1,
+                                                                new Node<>(-99,
+                                                                        new Node<>(1,
+                                                                                new Node<>(3,
+                                                                                        new Node<>(2)))))))))));
+        System.out.println(consistentCount(lst));
     }
 
     /**
-     * delete all appearances of st
-     * @param lst a list of strings
+     * del all appearances of a string in a list
+     * @param lst a list
      * @param st a string
      * @return lst after modification
      */
-    public static Node<String> DellAllSt(Node<String> lst, String st) {
+    public static Node<String> delAllSt(Node<String> lst, String st) {
+        // edge case - st is first
+        if (lst.getValue().equals(st)) {
+            lst = lst.getNext();
+        }
 
+        // go over lst
+        Node<String> q = lst, p = lst.getNext();
+        while (p.hasNext()) {
+            if (p.getValue().equals(st)) {
+                q.setNext(p.getNext());
+            }
+
+            q = p;
+            p = q.getNext();
+        }
+
+        // edge case = st is last
+        if (p.getValue().equals(st)) {
+            q.setNext(null);
+        }
+
+        return lst;
+    }
+
+    /**
+     * @param lst a list
+     * @return a new list in a reverse order
+     */
+    public static Node<Integer> reverse(Node<Integer> lst) {
+        // deal w/ first element
+        Node<Integer> out = new Node<>(lst.getValue());
+        lst=  lst.getNext();
+
+        // go over lst and each time create a new node and make it the head of out
+        while (lst != null) {
+            Node<Integer> temp = new Node<>(lst.getValue());
+            temp.setNext(out);
+            out = temp;
+
+            lst = lst.getNext();
+        }
+
+        return out;
+    }
+
+    /**
+     * a consistent sequence is one where it either goes up all the way or down all the way.
+     * each sequence in a list is separated by the number -99.
+     * @param lst a list
+     * @return n of consistent sequences in lst
+     */
+    public static int consistentCount(Node<Integer> lst) {
+        int count = 0;
+        while (lst != null) {
+            if (isIncreasing(lst)) {
+                count++;
+            }
+            else if (isDecreasing(lst)) {
+                count++;
+            }
+
+            while (lst != null && lst.getValue() != -99) {
+                lst = lst.getNext();
+            }
+        }
+
+        return count;
+    }
+
+    private static boolean isIncreasing(Node<Integer> lst) {
+        while (lst.hasNext() && lst.getNext().getValue() != -99) {
+            if (lst.getNext().getValue() < lst.getValue()) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    private static boolean isDecreasing(Node<Integer> lst) {
+        while (lst.hasNext() && lst.getNext().getValue() != -99) {
+            if (lst.getNext().getValue() > lst.getValue()) {
+                return false;
+            }
+        }
+        return true;
     }
 }
