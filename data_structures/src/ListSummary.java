@@ -17,12 +17,6 @@
 //     * @return modified list
 //     */
 //    public static Node<String> delAllSt(Node<String> lst, String st) {
-//        int count = countOccurrences(lst, st);
-//        for (int i = 0; i < count; i++) {
-//            deleteByValueFromList(lst, st);
-//        }
-//        return lst;
-//    }
 //
 //    /**
 //     * count occurrences of st in lst
@@ -155,3 +149,18 @@
 //         */
 //    }
 //}
+public class ListSummary {
+    public static void main(String[] args) {
+
+    }
+
+    /**
+     * delete all appearances of st
+     * @param lst a list of strings
+     * @param st a string
+     * @return lst after modification
+     */
+    public static Node<String> DellAllSt(Node<String> lst, String st) {
+
+    }
+}
