@@ -1,7 +1,3 @@
-/**
- * Idan Menaged
- */
-
 public class ListSummary {
     public static void main(String[] args) {
         Node<Integer> lst = new Node<>(1,

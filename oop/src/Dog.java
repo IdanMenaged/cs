@@ -1,5 +1,3 @@
-package zoo_2;
-
 /**
  * Idan Menaged
  */
@@ -15,6 +13,7 @@ public class Dog extends Mammal {
 
     public Dog(Dog dog) {
         super(dog);
+        this.bones = dog.bones;
     }
 
     // setters

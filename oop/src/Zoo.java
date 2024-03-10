@@ -1,10 +1,3 @@
-package zoo_2;
-
-import zoo.Bird;
-import zoo.Dog;
-import zoo.Fish;
-import zoo.Mammal;
-
 import java.util.Scanner;
 
 public class Zoo {
@@ -19,7 +12,7 @@ public class Zoo {
     public static void main(String[] args) {
         int i, energy, milk, depth, nest, bones, boneSum = 0;
         Mammal[] mammals = new Mammal[3];
-        zoo.Dog[] dogs = new zoo.Dog[2];
+        Dog[] dogs = new Dog[2];
         Fish[] fishArr = new Fish[2];
         Bird[] birds = new Bird[2];
         String name;
@@ -77,7 +70,7 @@ public class Zoo {
             milk = reader.nextInt();
             bones = reader.nextInt();
 
-            dogs[i] = new zoo.Dog(name, gender, energy, milk, bones);
+            dogs[i] = new Dog(name, gender, energy, milk, bones);
 
             // print
             System.out.println(dogs[i]);

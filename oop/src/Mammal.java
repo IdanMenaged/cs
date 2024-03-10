@@ -1,7 +1,3 @@
-package zoo_2;
-
-import zoo.Animal;
-
 /**
  * Idan Menaged
  */
@@ -15,6 +11,11 @@ public class Mammal extends Animal {
     public Mammal(String name, char gender, int energy, int milk) {
         super(name, gender, energy);
         this.milk = milk;
+    }
+
+    public Mammal(Mammal mammal) {
+        super(mammal);
+        this.milk = mammal.milk;
     }
 
     // setters

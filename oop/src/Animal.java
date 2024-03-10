@@ -1,5 +1,3 @@
-package zoo;
-
 /**
  * Idan Menaged
  */
@@ -14,6 +12,12 @@ public class Animal {
         this.name = name;
         this.gender = gender;
         this.energy = energy;
+    }
+
+    public Animal(Animal animal) {
+        this.name = animal.name;
+        this.gender = animal.gender;
+        this.energy = animal.energy;
     }
 
     // setters
