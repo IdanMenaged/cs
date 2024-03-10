@@ -1,4 +1,4 @@
-public class ListAndClasses {
+public class ListsAndClasses {
     /**
      * @param rolls a list of rolls
      * @return the most common roll
