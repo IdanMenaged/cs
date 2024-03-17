@@ -2,10 +2,15 @@ public class Person {
     private String name; // person's name
     private String id; // id number
 
-    // constructor
+    // constructors
     public Person(String name, String id) {
         this.name = name;
         this.id = id;
+    }
+
+    public Person(Person p) {
+        this.name = p.name;
+        this.id = p.id;
     }
 
     // setters
