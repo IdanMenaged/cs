@@ -35,6 +35,17 @@ public class Dog extends Mammal {
         return "*** Dog " + super.toString() + " bones: " + this.bones + " ***";
     }
 
+    // equals
+    @Override
+    public boolean equals(Object other) {
+        if (!(other instanceof Dog)) {
+            return false;
+        }
+
+        Dog d = (Dog) other;
+        return super.equals(other) && this.bones == d.bones;
+    }
+
     // methods
 
     /**

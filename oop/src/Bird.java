@@ -34,4 +34,15 @@ public class Bird extends Animal {
     public String toString() {
         return "** Bird " + super.toString() + " nest: " + this.nest + " **";
     }
+
+    // equals
+    @Override
+    public boolean equals(Object other) {
+        if (!(other instanceof Bird)) {
+            return false;
+        }
+
+        Bird b = (Bird) other;
+        return super.equals(other) && this.nest == b.nest;
+    }
 }

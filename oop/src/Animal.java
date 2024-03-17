@@ -1,3 +1,5 @@
+import org.hamcrest.Factory;
+
 /**
  * Idan Menaged
  */
@@ -53,5 +55,15 @@ public class Animal {
     @Override
     public String toString() {
         return "* Animal name: " + this.name + " gender: " + this.gender + " energy: " + this.energy + " *";
+    }
+
+    // equals
+    public boolean equals(Object other) {
+        if (!(other instanceof Animal)) {
+            return false;
+        }
+
+        Animal a = (Animal) other;
+        return this.name.equals(a.name) && this.gender == a.gender && this.energy == a.energy;
     }
 }

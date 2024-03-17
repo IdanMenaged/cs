@@ -41,6 +41,17 @@ public class Fish extends Animal {
         return "** Fish " + super.toString() + " depth: " + this.depth + " **";
     }
 
+    // equals
+    @Override
+    public boolean equals(Object other) {
+        if (!(other instanceof Fish)) {
+            return false;
+        }
+
+        Fish f = (Fish) other;
+        return super.equals(other) && this.depth == f.depth;
+    }
+
     // methods
 
     /**
