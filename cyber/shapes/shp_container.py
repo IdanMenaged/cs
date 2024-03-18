@@ -6,7 +6,7 @@ import shapes
 import random
 
 POSSIBLE_SHAPES = {shapes.Rectangle, shapes.Square, shapes.Circle}
-MIN_VAL, MAX_VAL = 0, 10  # range for random sizes
+MIN_VAL, MAX_VAL = 1, 11  # range for random sizes
 POSSIBLE_COLORS = {'red', 'green', 'blue'}
 
 

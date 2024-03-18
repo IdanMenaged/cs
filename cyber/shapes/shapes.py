@@ -13,7 +13,7 @@ class Square(Shape):
         self.side = side
 
     def __repr__(self):
-        return super.__repr__(self) + f', side: {self.side}'
+        return super().__repr__() + f', side: {self.side}'
 
     def who_am_i(self):
         return 'I am a square'
@@ -25,7 +25,7 @@ class Rectangle(Shape):
         self.side1, self.side2 = side1, side2
 
     def __repr__(self):
-        return super.__repr__(self) + f', side1: {self.side1}, side2: {self.side2}'
+        return super().__repr__() + f', side1: {self.side1}, side2: {self.side2}'
 
     def who_am_i(self):
         return 'I am a rectangle'
@@ -37,7 +37,7 @@ class Circle(Shape):
         self.radius = radius
 
     def __repr__(self):
-        return super.__repr__(self) + f', radius: {self.radius}'
+        return super().__repr__() + f', radius: {self.radius}'
 
     def who_am_i(self):
         return 'I am a circle'
