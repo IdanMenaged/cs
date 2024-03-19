@@ -5,23 +5,9 @@ Idan Menaged
 import socket
 import sys
 import protocol
+from constants import *
 
 IP = '127.0.0.1'
-PORT = 4000
-PARAM_COUNTS = {
-    'take_screenshot': 0,
-    'send_file': 1,
-    'dir': 1,
-    'delete': 1,
-    'copy': 2,
-    'execute': 1,
-    'echo': 1,
-    'quit': 0,
-    'exit': 0,
-    'reload': 0
-}
-EXIT_CODES = {'quit', 'exit'}
-
 
 def main():
     """
