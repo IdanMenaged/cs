@@ -6,7 +6,7 @@ import socket
 import sys
 import protocol
 from constants import *
-import methods
+from methods import Methods
 
 IP = '0.0.0.0'
 SIM_USERS = 1
@@ -75,10 +75,10 @@ class Server:
 
         # special exception
         if cmd == 'reload':
-            res = methods.handle_reload(client_socket)
+            res = Methods.handle_reload(client_socket)
         else:
             try:
-                res = getattr(methods, cmd)(*params)
+                res = getattr(Methods, cmd)(*params)
             except:
                 if cmd in BIN_METHODS:
                     res = b'illegal command'
