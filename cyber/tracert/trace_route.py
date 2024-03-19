@@ -41,7 +41,7 @@ def trace_rt(target):
 	while True:
 		res = send_ping(target, ttl)
 
-		if res[ICMP].type == ECHO_REPLY:
+		if res is None or res[ICMP].type == ECHO_REPLY:
 			break
 
 		ttl += 1
