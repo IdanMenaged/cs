@@ -4,7 +4,7 @@ Idan Menaged
 
 import socket
 import sys
-import protocol
+from protocol import Protocol
 from constants import *
 from methods import Methods
 
@@ -48,14 +48,14 @@ class Server:
         client_socket, addr = self.sock.accept()
 
         while True:
-            req = protocol.receive(client_socket).lower()
+            req = Protocol.receive(client_socket).lower()
 
             res = self.handle_req(client_socket, req)
 
             if req.split()[0] in BIN_METHODS:
-                protocol.send_bin(client_socket, res)
+                Protocol.send_bin(client_socket, res)
             else:
-                protocol.send(client_socket, res)
+                Protocol.send(client_socket, res)
 
             if res in EXIT_CODES:
                 break

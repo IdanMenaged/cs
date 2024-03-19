@@ -4,10 +4,11 @@ Idan Menaged
 
 import socket
 import sys
-import protocol
+from protocol import Protocol
 from constants import *
 
 IP = '127.0.0.1'
+
 
 def main():
     """
@@ -40,14 +41,14 @@ class Client:
         :param req: request
         sends req to server
         """
-        protocol.send(self.sock, req)
+        Protocol.send(self.sock, req)
 
     def handle_server_response(self):
         """
         recv and handle server response
         :return: response
         """
-        res = protocol.receive(self.sock)
+        res = Protocol.receive(self.sock)
         return res
 
     def handle_user_input(self):
