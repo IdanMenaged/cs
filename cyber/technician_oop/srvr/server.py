@@ -6,7 +6,7 @@ import socket
 import sys
 from protocol import Protocol
 from constants import *
-from methods import Methods
+import methods
 
 IP = '0.0.0.0'
 SIM_USERS = 1
@@ -78,7 +78,7 @@ class Server:
             res = Server.handle_reload(client_socket)
         else:
             try:
-                res = getattr(Methods, cmd)(*params)
+                res = getattr(methods.Methods, cmd)(*params)
             except:
                 if cmd in BIN_METHODS:
                     res = b'illegal command'
@@ -86,7 +86,7 @@ class Server:
                     res = 'illegal command'
 
             # for testing errors
-            # res = getattr(Methods, cmd)(*params)
+            # res = getattr(methods.Methods, cmd)(*params)
 
         return res
 
@@ -99,7 +99,7 @@ class Server:
         """
         Protocol.send(sock, 'ready for reload')
         data = Protocol.receive_bin(sock)
-        Methods.save_to_file(METHODS_PATH, data)
+        methods.Methods.save_to_file(METHODS_PATH, data)
 
         importlib.reload(sys.modules['methods'])
         return 'module reloaded'
