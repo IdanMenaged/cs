@@ -85,6 +85,9 @@ class Server:
                 else:
                     res = 'illegal command'
 
+            # for testing errors
+            # res = getattr(Methods, cmd)(*params)
+
         return res
 
 
