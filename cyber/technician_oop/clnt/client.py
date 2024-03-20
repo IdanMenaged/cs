@@ -86,7 +86,8 @@ class Client:
                 except socket.error:
                     req = 'quit'
                 res = self.handle_server_response(req)
-                print(res)
+                if res not in EXIT_CODES:
+                    print(res)
 
 
 if __name__ == '__main__':
