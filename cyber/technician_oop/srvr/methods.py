@@ -7,7 +7,7 @@ import os
 import shutil
 import subprocess
 from constants import *
-import protocol
+from protocol import Protocol
 
 SCREENSHOT_PATH = 'c:\\test_folder\\server\\screen.jpg'
 FILE_PATH = 'c:\\test_folder\\client'
@@ -106,8 +106,8 @@ class Methods:
         saves the new data into 'methods.py' and re-imports
         :return: response to send back
         """
-        protocol.send(sock, 'ready for reload')
-        data = protocol.receive_bin(sock)
+        Protocol.send(sock, 'ready for reload')
+        data = Protocol.receive_bin(sock)
         Methods.save_to_file(METHODS_PATH, data)
 
         importlib.reload(sys.modules[__name__])
