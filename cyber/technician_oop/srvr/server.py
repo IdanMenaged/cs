@@ -1,7 +1,7 @@
 """
 Idan Menaged
 """
-
+import importlib
 import socket
 import sys
 from protocol import Protocol
@@ -75,7 +75,7 @@ class Server:
 
         # special exception
         if cmd == 'reload':
-            res = Methods.handle_reload(client_socket)
+            res = Server.handle_reload(client_socket)
         else:
             try:
                 res = getattr(Methods, cmd)(*params)
@@ -89,6 +89,20 @@ class Server:
             # res = getattr(Methods, cmd)(*params)
 
         return res
+
+    @staticmethod
+    def handle_reload(sock):
+        """
+        to be called on the server after a reload
+        saves the new data into 'methods.py' and re-imports
+        :return: response to send back
+        """
+        Protocol.send(sock, 'ready for reload')
+        data = Protocol.receive_bin(sock)
+        Methods.save_to_file(METHODS_PATH, data)
+
+        importlib.reload(sys.modules['methods'])
+        return 'module reloaded'
 
 
 if __name__ == '__main__':
