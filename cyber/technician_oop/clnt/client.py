@@ -51,10 +51,13 @@ class Client:
         :param req: request
         :return: response
         """
-        if req.split()[0] in BIN_METHODS:
-            res = Protocol.receive_bin(self.sock)
-        else:
-            res = Protocol.receive(self.sock)
+        try:
+            if req.split()[0] in BIN_METHODS:
+                res = Protocol.receive_bin(self.sock)
+            else:
+                res = Protocol.receive(self.sock)
+        except socket.error as err:
+            res = 'quit'
 
         if res == 'illegal command' or res == b'illegal command':
             return 'illegal command'
@@ -78,7 +81,10 @@ class Client:
             if not self.valid_request(req):
                 print('illegal request')
             else:
-                self.send_request_to_server(req)
+                try:
+                    self.send_request_to_server(req)
+                except socket.error:
+                    req = 'quit'
                 res = self.handle_server_response(req)
                 print(res)
 
