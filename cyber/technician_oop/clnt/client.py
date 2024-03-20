@@ -56,6 +56,9 @@ class Client:
         else:
             res = Protocol.receive(self.sock)
 
+        if res == 'illegal command' or res == b'illegal command':
+            return 'illegal command'
+
         if req.split()[0] == 'send_file':
             base_name = os.path.basename(req.split()[1])
             save_to = os.path.join(methods.FILE_PATH, base_name)
