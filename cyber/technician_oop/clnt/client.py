@@ -59,7 +59,8 @@ class Client:
         if req.split()[0] == 'send_file':
             base_name = os.path.basename(req.split()[1])
             save_to = os.path.join(methods.FILE_PATH, base_name)
-            res = Methods.save_to_file(save_to, res)
+            Methods.save_to_file(save_to, res)
+            res = 'file sent'
 
         return res
 
