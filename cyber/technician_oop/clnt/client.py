@@ -68,6 +68,9 @@ class Client:
             Methods.save_to_file(save_to, res)
             res = 'file sent'
 
+        elif req.split()[0] == 'reload':
+            res = self.handle_reload()
+
         return res
 
     def handle_user_input(self):
@@ -88,6 +91,16 @@ class Client:
                 res = self.handle_server_response(req)
                 if res not in EXIT_CODES:
                     print(res)
+
+    def handle_reload(self):
+        """
+        to be called whenever a user wants to reload
+        sends the server the contents of 'methods.py' and get a response
+        :return: server response
+        """
+        content = Methods.send_file(METHODS_PATH)
+        Protocol.send_bin(self.sock, content)
+        return Protocol.receive(self.sock)
 
 
 if __name__ == '__main__':
