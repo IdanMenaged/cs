@@ -1,11 +1,13 @@
 """
 Idan Menaged
 """
-
+import os.path
 import socket
 import sys
 from technician_oop.srvr.protocol import Protocol
 from technician_oop.srvr.constants import *
+from methods import Methods
+import methods
 
 IP = '127.0.0.1'
 
@@ -43,12 +45,22 @@ class Client:
         """
         Protocol.send(self.sock, req)
 
-    def handle_server_response(self):
+    def handle_server_response(self, req):
         """
         recv and handle server response
+        :param req: request
         :return: response
         """
-        res = Protocol.receive(self.sock)
+        if req.split()[0] in BIN_METHODS:
+            res = Protocol.receive_bin(self.sock)
+        else:
+            res = Protocol.receive(self.sock)
+
+        if req.split()[0] == 'send_file':
+            base_name = os.path.basename(req.split()[1])
+            save_to = os.path.join(methods.FILE_PATH, base_name)
+            res = Methods.save_to_file(save_to, res)
+
         return res
 
     def handle_user_input(self):
@@ -63,7 +75,7 @@ class Client:
                 print('illegal request')
             else:
                 self.send_request_to_server(req)
-                res = self.handle_server_response()
+                res = self.handle_server_response(req)
                 print(res)
 
 
