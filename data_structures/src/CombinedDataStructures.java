@@ -1,3 +1,5 @@
+import javax.naming.InsufficientResourcesException;
+
 /**
  * Idan Menaged
  */
@@ -22,7 +24,7 @@ public class CombinedDataStructures {
             q.insert(q.remove());
         }
 
-        q.remove()
+        q.remove();
         return min;
     }
 
@@ -51,14 +53,21 @@ public class CombinedDataStructures {
      * if first item is odd => del all even numbers
      * @param lst a list of natural numbers
      */
-    public static void allSamePrity(Node<Integer> lst) {
+    public static void allSameParity(Node<Integer> lst) {
         boolean firstEven = lst.getValue() % 2 == 0;
 
         if (firstEven) {
-
+            delOdd(lst);
+        }
+        else {
+            delEven(lst);
         }
     }
 
+    /**
+     * deletes all odd numbers in lst
+     * @param lst list of integers
+     */
     private static void delOdd(Node<Integer> lst) {
         Node<Integer> q = lst, p = lst.getNext();
 
@@ -67,10 +76,74 @@ public class CombinedDataStructures {
                 q.setNext(p.getNext());
                 q.setNext(null);
             }
+
+            q = q.getNext();
+            p = p.getNext();
         }
 
         if (p != null && p.getValue() % 2 != 0) {
             q.setNext(null);
         }
+    }
+
+    /**
+     * deletes all even numbers in lst
+     * @param lst list of integers
+     */
+    private static void delEven(Node<Integer> lst) {
+        Node<Integer> q = lst, p = lst.getNext();
+
+        while (p != null && p.hasNext()) {
+            if (p.getValue() % 2 == 0) {
+                q.setNext(p.getNext());
+                q.setNext(null);
+            }
+
+            q = q.getNext();
+            p = p.getNext();
+        }
+
+        if (p != null && p.getValue() % 2 == 0) {
+            q.setNext(null);
+        }
+    }
+
+    /**
+     * @param lst a list of strings
+     * @return a concatenation of first and lst strings in lst. if lst is empty, an empty string. if lst length is one,
+     * 2 times the first string
+     */
+    public static String lstToStr(Node<String> lst) {
+        if (lst == null) {
+            return "";
+        }
+        if (!lst.hasNext()) {
+            return lst.getValue() + lst.getValue();
+        }
+
+        Node<String> last = lst;
+        while (last.hasNext()) {
+            last = last.getNext();
+        }
+
+        return lst.getValue() + last.getValue();
+    }
+
+    /**
+     * @param lst a list of lists of integers
+     * @return a list of strings where each item is the first and last strings in the sub list
+     */
+    public static Node<String> zipLst(Node<Node<String>> lst) {
+        Node<String> out = new Node<>();
+
+        while (lst != null) {
+            out.setNext(new Node<>(
+                    lstToStr(lst.getValue())
+            ));
+
+            lst = lst.getNext();
+        }
+
+        return out.getNext();
     }
 }
