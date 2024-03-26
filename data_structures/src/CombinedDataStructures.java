@@ -91,6 +91,10 @@ public class CombinedDataStructures {
      * @param lst list of integers
      */
     private static void delEven(Node<Integer> lst) {
+        if (lst == null) {
+            return;
+        }
+
         Node<Integer> q = lst, p = lst.getNext();
 
         while (p != null && p.hasNext()) {
