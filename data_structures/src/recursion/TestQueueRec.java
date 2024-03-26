@@ -1,12 +1,6 @@
 package recursion;
 
-import java.util.*;
-import java.io.*;
-import java.nio.charset.*;
-import org.junit.Test;
-import org.junit.Ignore;
-
-import queue.Queue;
+import Queue;
 
 import junit.framework.*;
 public class TestQueueRec extends TestCase

@@ -2,15 +2,12 @@ package queue.classes;
 
 import java.util.*;
 import java.io.*;
-import java.nio.charset.*;
-import org.junit.Test;
-import org.junit.Ignore;
 
 import junit.framework.*;
 
 import java.lang.reflect.*;
 
-import queue.Queue;
+import Queue;
 public class TestQueueClasses extends TestCase
 {
 

@@ -1,6 +1,6 @@
 package queue.classes;
 
-import queue.Queue;
+import Queue;
 
 /*
 Idan Menaged

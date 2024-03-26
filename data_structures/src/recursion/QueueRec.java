@@ -4,7 +4,7 @@ package recursion;
  * Idan Menaged
  */
 
-import queue.Queue;
+import Queue;
 
 public class QueueRec {
     /**
