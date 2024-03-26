@@ -54,6 +54,10 @@ public class CombinedDataStructures {
      * @param lst a list of natural numbers
      */
     public static void allSameParity(Node<Integer> lst) {
+        if (lst == null) {
+            return;
+        }
+
         boolean firstEven = lst.getValue() % 2 == 0;
 
         if (firstEven) {
@@ -74,11 +78,13 @@ public class CombinedDataStructures {
         while (p != null && p.hasNext()) {
             if (p.getValue() % 2 != 0) {
                 q.setNext(p.getNext());
-                q.setNext(null);
+                p.setNext(null);
+                p = q.getNext();
             }
-
-            q = q.getNext();
-            p = p.getNext();
+            else {
+                q = q.getNext();
+                p = p.getNext();
+            }
         }
 
         if (p != null && p.getValue() % 2 != 0) {
@@ -100,11 +106,13 @@ public class CombinedDataStructures {
         while (p != null && p.hasNext()) {
             if (p.getValue() % 2 == 0) {
                 q.setNext(p.getNext());
-                q.setNext(null);
+                p.setNext(null);
+                p = q.getNext();
             }
-
-            q = q.getNext();
-            p = p.getNext();
+            else {
+                q = q.getNext();
+                p = p.getNext();
+            }
         }
 
         if (p != null && p.getValue() % 2 == 0) {
@@ -166,14 +174,15 @@ public class CombinedDataStructures {
      * @return a list of strings where each item is the first and last strings in the sub list
      */
     public static Node<String> zipLst(Node<Node<String>> lst) {
-        Node<String> out = new Node<>();
+        Node<String> out = new Node<>(), last = out;
 
         while (lst != null) {
-            out.setNext(new Node<>(
+            last.setNext(new Node<>(
                     lstToStr(lst.getValue())
             ));
 
             lst = lst.getNext();
+            last = last.getNext();
         }
 
         return out.getNext();
