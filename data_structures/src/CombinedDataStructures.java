@@ -19,6 +19,7 @@ public class CombinedDataStructures {
         int min = q.head();
         q.insert(q.remove());
 
+        // go over q and update min
         while (q.head() != null) {
             min = Math.min(q.head(), min);
             q.insert(q.remove());
@@ -40,6 +41,7 @@ public class CombinedDataStructures {
         int min = minQ(lst.getValue());
         lst = lst.getNext();
 
+        // go over list and find min
         while (lst != null) {
             min = Math.min(minQ(lst.getValue()), min);
             lst = lst.getNext();
@@ -75,6 +77,7 @@ public class CombinedDataStructures {
     private static void delOdd(Node<Integer> lst) {
         Node<Integer> q = lst, p = lst.getNext();
 
+        // go over list and del any odd number
         while (p != null && p.hasNext()) {
             if (p.getValue() % 2 != 0) {
                 q.setNext(p.getNext());
@@ -103,6 +106,7 @@ public class CombinedDataStructures {
 
         Node<Integer> q = lst, p = lst.getNext();
 
+        // go over list and delete every even number
         while (p != null && p.hasNext()) {
             if (p.getValue() % 2 == 0) {
                 q.setNext(p.getNext());
@@ -127,6 +131,7 @@ public class CombinedDataStructures {
     public static void evenFirst(Queue<Node<Integer>> q) {
         Queue<Node<Integer>> evenQ = new Queue<>(), oddQ = new Queue<>();
 
+        // go over q, call allSameParity, and insert in the correct queue
         while (!q.isEmpty()) {
             allSameParity(q.head());
 
@@ -140,9 +145,11 @@ public class CombinedDataStructures {
             q.remove();
         }
 
+        // put all even queues back in
         while (!evenQ.isEmpty()) {
             q.insert(evenQ.remove());
         }
+        // put all odd queues back in
         while (!oddQ.isEmpty()) {
             q.insert(oddQ.remove());
         }
@@ -161,6 +168,7 @@ public class CombinedDataStructures {
             return lst.getValue() + lst.getValue();
         }
 
+        // get to the last node
         Node<String> last = lst;
         while (last.hasNext()) {
             last = last.getNext();
@@ -176,6 +184,7 @@ public class CombinedDataStructures {
     public static Node<String> zipLst(Node<Node<String>> lst) {
         Node<String> out = new Node<>(), last = out;
 
+        // go over list and create new nodes
         while (lst != null) {
             last.setNext(new Node<>(
                     lstToStr(lst.getValue())
