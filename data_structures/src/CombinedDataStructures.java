@@ -109,6 +109,34 @@ public class CombinedDataStructures {
     }
 
     /**
+     * call allSameParity and than move even to the start and odd to the end
+     * @param q queue of lists of integers
+     */
+    public static void evenFirst(Queue<Node<Integer>> q) {
+        Queue<Node<Integer>> evenQ = new Queue<>(), oddQ = new Queue<>();
+
+        while (!q.isEmpty()) {
+            allSameParity(q.head());
+
+            if (q.head().getValue() % 2 == 0) {
+                evenQ.insert(q.head());
+            }
+            else {
+                oddQ.insert(q.head());
+            }
+
+            q.remove();
+        }
+
+        while (!evenQ.isEmpty()) {
+            q.insert(evenQ.remove());
+        }
+        while (!oddQ.isEmpty()) {
+            q.insert(oddQ.remove());
+        }
+    }
+
+    /**
      * @param lst a list of strings
      * @return a concatenation of first and lst strings in lst. if lst is empty, an empty string. if lst length is one,
      * 2 times the first string
