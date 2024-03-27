@@ -3,13 +3,13 @@
  */
 
 public class Worker {
-    private static final double MIN_SALARY = 4000;
+    private static final double MINIMAL_SALARY = 4000;
 
     protected String name; // name
     protected String id; // id number
     protected int number; // for identification within the organization
 
-    private static int counter = 0;
+    protected static int counter = 1;
 
     // constructors
     public Worker(String name, String id) {
@@ -22,6 +22,7 @@ public class Worker {
     public Worker(Worker w) {
         this.name = w.name;
         this.id = w.id;
+        this.number = w.number;
     }
 
     // setters
@@ -73,6 +74,6 @@ public class Worker {
      * @return min salary
      */
     public double calSalary() {
-        return Worker.MIN_SALARY;
+        return Worker.MINIMAL_SALARY;
     }
 }
