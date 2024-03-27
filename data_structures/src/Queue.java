@@ -1,4 +1,4 @@
-package queue;
+import queue.Node;
 
 public class Queue<T> {
 	

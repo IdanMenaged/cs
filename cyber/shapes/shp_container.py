@@ -36,19 +36,20 @@ class ShapeContainer:
             # init
             color = POSSIBLE_COLORS.pop()
             POSSIBLE_COLORS.add(color)
-            match shape:
-                case shapes.Square:
+
+            if shape == shapes.Square:
                     side = random.randrange(MIN_VAL, MAX_VAL)
                     self.shapes.append(shape(color, side))
-                case shapes.Rectangle:
+                elif shape == shapes.Rectangle:
                     side1, side2 = random.randrange(MIN_VAL, MAX_VAL), random.randrange(MIN_VAL, MAX_VAL)
                     self.shapes.append(shape(color, side1, side2))
-                case shapes.Circle:
+                elif shape == shapes.Circle:
                     radius = random.randrange(MIN_VAL, MAX_VAL)
                     self.shapes.append(shape(color, radius))
-                case _:
+                else:
                     raise Exception(f'no protocol for initiating shape {shape}. have you added it to POSSIBLE_SHAPES '
-                                    f'without adding to this match statement?')
+                                    f'without adding to this if statement?')
+
 
     def sum_areas(self):
         """
