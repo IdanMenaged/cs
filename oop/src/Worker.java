@@ -9,14 +9,14 @@ public class Worker {
     protected String id; // id number
     protected int number; // for identification within the organization
 
-    private static int count = 0;
+    private static int counter = 0;
 
     // constructors
     public Worker(String name, String id) {
         this.name = name;
         this.id = id;
-        this.number = Worker.count;
-        Worker.count++;
+        this.number = Worker.counter;
+        Worker.counter++;
     }
 
     public Worker(Worker w) {
@@ -34,8 +34,8 @@ public class Worker {
         this.id = id;
     }
 
-    public static void setCount(int count) {
-        Worker.count = count;
+    public static void setCounter(int counter) {
+        Worker.counter = counter;
     }
 
     public void setNumber(int number) {
@@ -52,8 +52,8 @@ public class Worker {
         return this.id;
     }
 
-    public static int getCount() {
-        return Worker.count;
+    public static int getCounter() {
+        return Worker.counter;
     }
 
     public int getNumber() {
