@@ -4,8 +4,8 @@ Idan Menaged
 import os.path
 import socket
 import sys
-from technician_oop.srvr.protocol import Protocol
-from technician_oop.srvr.constants import *
+from protocol import Protocol
+from constants import *
 from methods import Methods
 import methods
 

@@ -22,7 +22,7 @@ class Methods:
         """
         im = ImageGrab.grab()
         im.save(SCREENSHOT_PATH)
-        return 'screenshot taken'
+        return 'screenshot takenn'
 
     @staticmethod
     def send_file(file_path):
