@@ -8,6 +8,8 @@ import org.junit.Ignore;
 import junit.framework.*;
 public class TestListRecursion extends TestCase 
 {
+    private static String LS = System.lineSeparator();
+    
     private static <T> Node<T> generateList(T [] values)
     {
         Node<T> lst = new Node<T>(values[0]);
@@ -158,7 +160,7 @@ public class TestListRecursion extends TestCase
         Integer [] arr = {1, 2, 5, 4};
         Node<Integer> lst = generateList(arr);
         
-        String expected = "2\r\n4\r\n";
+        String expected = "2" + LS + "4" + LS;
         
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
         System.setOut(new PrintStream(baos));
@@ -194,7 +196,7 @@ public class TestListRecursion extends TestCase
         Integer [] arr = {1, 7};
         Node<Integer> lst = generateList(arr);
         
-        String expected = "7\r\n";
+        String expected = "7" + LS;
         
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
         System.setOut(new PrintStream(baos));
