@@ -1,9 +1,11 @@
 public class BusRoute {
     private Node<Station> route; // the route
+    private Node<Station> lastStation; // last station on route
 
     // constructor
     public BusRoute(Station first, Station second) {
         this.route = new Node<>(first, new Node<>(second));
+        this.lastStation = this.route.getNext();
     }
 
     /**
@@ -11,14 +13,11 @@ public class BusRoute {
      * @param newStation new station
      */
     public void addStation(Station newStation) {
-        // get last station
-        Node<Station> route = this.route;
-        while (route.hasNext()) {
-            route = route.getNext();
-        }
-
         // add new station
-        route.setNext(new Node<>(newStation));
+        this.lastStation.setNext(new Node<>(newStation));
+
+        // update last
+        this.lastStation = this.lastStation.getNext();
     }
 
     /**

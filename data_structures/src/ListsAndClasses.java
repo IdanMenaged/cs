@@ -6,6 +6,11 @@ public class ListsAndClasses {
     public static int backgammon(Node<Dice> rolls) {
         int[] counts = new int[6]; // index = roll - 1
 
+        // init counts
+        for (int i = 0; i < counts.length; i++) {
+            counts[i] = 0;
+        }
+
         // inc counters
         while (rolls != null) {
             counts[rolls.getValue().getRoll1() - 1]++;
