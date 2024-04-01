@@ -31,6 +31,32 @@ public class Pole
     {
         return this.head == null;
     }
+
+    /**
+     * sorts the pole so that large rings are first
+     */
+    public void sort() {
+        Node<Ring> pole = this.head;
+        Node<Ring> largeRings = new Node<>(), smallRings = new Node<>();
+        Node<Ring> lastLarge = largeRings, lastSmall = smallRings;
+
+        // go over pole and add to the right list
+        while (pole != null) {
+            if (pole.getValue().getSize().equals("L")) {
+                lastSmall.setNext(new Node<>(pole.getValue()));
+                lastLarge = lastLarge.getNext();
+            }
+            else {
+                lastSmall.setNext(new Node<>(pole.getValue()));
+                lastSmall = lastSmall.getNext();
+            }
+
+            pole = pole.getNext();
+        }
+
+        lastLarge.setNext(smallRings.getNext());
+        this.head = largeRings.getNext();
+    }
     
     // toString
     public String toString()
