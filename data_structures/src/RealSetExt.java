@@ -9,9 +9,10 @@ public class RealSetExt {
      */
     public static RealSet clone(RealSet rs) {
         RealSet out = new RealSet(), rsCopy = new RealSet();
+        int size = rs.size();
 
         // remove biggest and insert to both new sets
-        for (int i = 0; i < rs.size(); i++) {
+        for (int i = 0; i < size; i++) {
             double n = rs.findBiggest();
             rs.remove(n);
             out.insert(n);
@@ -19,7 +20,7 @@ public class RealSetExt {
         }
 
         // repair rs
-        for (int i = 0; i < rsCopy.size(); i++) {
+        for (int i = 0; i < size; i++) {
             double n = rsCopy.findBiggest();
             rsCopy.remove(n);
             rs.insert(n);

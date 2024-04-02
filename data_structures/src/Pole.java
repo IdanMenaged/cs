@@ -43,7 +43,7 @@ public class Pole
         // go over pole and add to the right list
         while (pole != null) {
             if (pole.getValue().getSize().equals("L")) {
-                lastSmall.setNext(new Node<>(pole.getValue()));
+                lastLarge.setNext(new Node<>(pole.getValue()));
                 lastLarge = lastLarge.getNext();
             }
             else {
