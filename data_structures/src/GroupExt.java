@@ -32,7 +32,8 @@ public class GroupExt {
      * @return the median of group
      */
     public static double median(Group group) {
-        int min = -1, max = -1;
+        int min = 0, max = 0;
+        group = group.copyGroup();
 
         // each time remove the min and max element
         while (!group.isEmpty()) {
