@@ -43,10 +43,10 @@ class Server:
         """
         while True:
             client_socket, addr = self.sock.accept()
-            clnt_thread = threading.Thread(target=self.handle_client, args=(client_socket))
+            clnt_thread = threading.Thread(target=self.handle_client, args=(client_socket,))
             clnt_thread.start()
 
-    def handle_client(self):  # TODO: add client socket to args, understand how tf it has access to that without me adding it
+    def handle_client(self, client_socket):
         """
         handle a single client and send them a response based on their request
         :return: should server terminate?
