@@ -8,7 +8,6 @@ from protocol import Protocol
 from constants import *
 from methods import Methods
 import methods
-import threading
 
 IP = '127.0.0.1'
 

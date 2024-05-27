@@ -7,6 +7,7 @@ import sys
 from protocol import Protocol
 from constants import *
 import methods
+import threading
 
 IP = '0.0.0.0'
 SIM_USERS = 1
@@ -41,17 +42,15 @@ class Server:
         handle clients until an 'exit' code is sent
         """
         while True:
-            should_exit = self.handle_client()
+            client_socket, addr = self.sock.accept()
+            clnt_thread = threading.Thread(target=self.handle_client, args=(client_socket))
+            clnt_thread.start()
 
-            if should_exit:
-                break
-
-    def handle_client(self):
+    def handle_client(self):  # TODO: add client socket to args, understand how tf it has access to that without me adding it
         """
         handle a single client and send them a response based on their request
         :return: should server terminate?
         """
-        client_socket, addr = self.sock.accept()
 
         while True:
             req = Protocol.receive(client_socket).lower()
