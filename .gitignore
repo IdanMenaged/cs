@@ -3,3 +3,11 @@
 
 ### cyber ###
 Pipfile.lock
+
+### vs code ###
+.vscode/
+
+
+### python ###
+.venv/
+__pycache__/
