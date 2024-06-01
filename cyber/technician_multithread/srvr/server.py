@@ -53,16 +53,23 @@ class Server:
         """
 
         while True:
-            req = Protocol.receive(client_socket).lower()
+            try:
+                req = Protocol.receive(client_socket).lower()
 
-            res = self.handle_req(client_socket, req)
+                res = self.handle_req(client_socket, req)
 
-            if req.split()[0] in BIN_METHODS:
-                Protocol.send_bin(client_socket, res)
-            else:
-                Protocol.send(client_socket, res)
+                if req.split()[0] in BIN_METHODS:
+                    Protocol.send_bin(client_socket, res)
+                else:
+                    Protocol.send(client_socket, res)
 
-            if res in EXIT_CODES:
+                if res in EXIT_CODES:
+                    break
+            except socket.error as e:
+                print("booz!!", e)
+                break
+            except Exception as e:
+                print("booozzz!!!", e)
                 break
 
         client_socket.close()
