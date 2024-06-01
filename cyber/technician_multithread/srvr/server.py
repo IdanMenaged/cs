@@ -39,7 +39,7 @@ class Server:
 
     def handle_clients(self):
         """
-        handle clients until an 'exit' code is sent
+        handle clients continuously
         """
         while True:
             client_socket, addr = self.sock.accept()
@@ -66,7 +66,7 @@ class Server:
                 break
 
         client_socket.close()
-        return res == 'exit'
+        return False
 
     @staticmethod
     def handle_req(client_socket, req):

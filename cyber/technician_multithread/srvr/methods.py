@@ -95,14 +95,6 @@ class Methods:
         return 'quit'
 
     @staticmethod
-    def exit():
-        """
-        send a code to terminate server
-        :return: exit code
-        """
-        return 'exit'
-
-    @staticmethod
     def handle_reload(sock):
         """
         to be called on the server after a reload
