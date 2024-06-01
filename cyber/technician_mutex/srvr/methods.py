@@ -17,6 +17,29 @@ class Methods:
     """
     methods server can execute
     """
+    hist = {}  # history of commands sent in the format of { (ip, port): ['placeholder'] }
+
+    @staticmethod
+    def new_hist(addr):
+        """
+        insert new entry to history
+        """
+        Methods.hist[addr] = []
+
+    @staticmethod
+    def add_to_hist(addr, req):
+        """
+        add request to history
+        """
+        Methods.hist[addr].append(req)
+
+    @staticmethod
+    def history(addr):
+        """
+        list the command history
+        """
+        return str(Methods.hist[addr])
+
     @staticmethod
     def take_screenshot():
         """
