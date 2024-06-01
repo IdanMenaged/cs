@@ -13,5 +13,6 @@ PARAM_COUNTS = {
     'echo': 1,
     'quit': 0,
     'exit': 0,
-    'reload': 0
+    'reload': 0,
+    'history': 0
 }

@@ -43,10 +43,11 @@ class Server:
         """
         while True:
             client_socket, addr = self.sock.accept()
-            clnt_thread = threading.Thread(target=self.handle_client, args=(client_socket,))
+            methods.Methods.new_hist(addr)
+            clnt_thread = threading.Thread(target=self.handle_client, args=(client_socket, addr))
             clnt_thread.start()
 
-    def handle_client(self, client_socket):
+    def handle_client(self, client_socket, addr):
         """
         handle a single client and send them a response based on their request
         :return: should server terminate?
@@ -55,8 +56,9 @@ class Server:
         while True:
             try:
                 req = Protocol.receive(client_socket).lower()
+                methods.Methods.add_to_hist(addr, req)
 
-                res = self.handle_req(client_socket, req)
+                res = self.handle_req(client_socket, req, addr)
 
                 if req.split()[0] in BIN_METHODS:
                     Protocol.send_bin(client_socket, res)
@@ -76,7 +78,7 @@ class Server:
         return False
 
     @staticmethod
-    def handle_req(client_socket, req):
+    def handle_req(client_socket, req, addr):
         """
         determines a response based on a request
         :param client_socket: client socket
@@ -88,6 +90,8 @@ class Server:
         # special exception
         if cmd == 'reload':
             res = Server.handle_reload(client_socket)
+        elif cmd == 'history':
+            res = methods.Methods.history(addr)
         else:
             try:
                 res = getattr(methods.Methods, cmd)(*params)
