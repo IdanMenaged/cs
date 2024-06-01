@@ -1,5 +1,6 @@
 import importlib
 import sys
+import threading
 
 from PIL import ImageGrab
 import glob
@@ -18,27 +19,35 @@ class Methods:
     methods server can execute
     """
     hist = {}  # history of commands sent in the format of { (ip, port): ['placeholder'] }
+    lock = threading.Lock()
 
     @staticmethod
     def new_hist(addr):
         """
         insert new entry to history
         """
+        Methods.lock.acquire()
         Methods.hist[addr] = []
+        Methods.lock.release()
 
     @staticmethod
     def add_to_hist(addr, req):
         """
         add request to history
         """
+        Methods.lock.acquire()
         Methods.hist[addr].append(req)
+        Methods.lock.release()
 
     @staticmethod
     def history(addr):
         """
         list the command history
         """
-        return str(Methods.hist[addr])
+        Methods.lock.acquire()
+        res = str(Methods.hist[addr])
+        Methods.lock.release()
+        return res
 
     @staticmethod
     def take_screenshot():
